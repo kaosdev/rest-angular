@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "rest-angular": [
+        "dist/rest-angular"
+      ],
+      "rest-angular/*": [
+        "dist/rest-angular/*"
+      ]
+    }
   }
 }
