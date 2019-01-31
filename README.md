@@ -1,4 +1,20 @@
 # RestAngular
 An Angular Http Client for fast Rest APIs.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+## Example Usage
+
+```ts
+@Injectable()
+@BaseUrl('https://jsonplaceholder.typicode.com')
+export class TestService extends RestAngularClient {
+
+  @GET('todos')
+  getTodos(): Observable<any[]> { return null; }
+
+  @GET('todos/:id')
+  getTodo(
+    @Path('id') id: number
+  ): Observable<any> { return null; }
+
+}
+```
