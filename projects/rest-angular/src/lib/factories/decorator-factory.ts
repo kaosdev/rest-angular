@@ -27,7 +27,7 @@ export class RestMethodDecoratorFactory implements RestDecoratorFactory<string, 
 
             const pathParamsParser = new StandardPathParameterParser(path, pathParams);
 
-            const pathWithParams = pathParamsParser.parseParameters(args);
+            const pathWithParams = pathParamsParser.parse(args);
             const parsedUrl = `${baseUrl}/${pathWithParams}`;
 
             const body = HttpHandler.getBodyFromArgs(bodyParamIndex, args);
