@@ -71,4 +71,16 @@ describe('Body Decorator', () => {
     expect(mockRequest.request.body.msg).toBe('body message');
     mockRequest.flush(mockResponse);
   });
+
+  it('should throw error when using multiple body parameters', () => {
+    expect(() => {
+      class TestBodyMultiError extends RestAngularClient {
+
+        @POST('examples/body/multi')
+        public createExampleBodyMulti(@Body() body: any, @Body() body2: any): Observable<any> {
+          return null;
+        }
+      }
+    }).toThrowError(`Only one '@Body()' decorator for each method is supported`);
+  });
 });
