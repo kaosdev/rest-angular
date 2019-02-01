@@ -16,6 +16,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.testService.getTodo(1).subscribe(todo => this.todo = todo);
+    this.testService.getTodo2(1).subscribe(todo => this.todo = todo);
   }
 }
