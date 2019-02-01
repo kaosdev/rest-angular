@@ -1,4 +1,4 @@
-import { RestAngularClient } from '../decorators/base-url-decorator';
+import {RestAngularClient} from '../rest-angular-client';
 
 export type RestMethodDecorator = (
     target: RestAngularClient,

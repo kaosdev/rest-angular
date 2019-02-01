@@ -1,5 +1,7 @@
-import { StandardPathParameterParser, CurlyPathParameterParser, PathParamNotFoundError } from './path-parser';
+import { PathParamNotFoundError } from './path-parser-errors';
 import * as _ from 'lodash';
+import {StandardPathParameterParser} from './standard-path-parser';
+import {CurlyPathParameterParser} from './curly-path-parser';
 
 function getLongPathWithArguments(argumentCount: number, prefix = ':', suffix = ''): string {
     return _.range(argumentCount).map(i => `path/${prefix}arg${i}${suffix}`).join('/');
@@ -9,7 +11,7 @@ function getLongPathArgumentNames(argumentCount: number): string[] {
     return _.range(argumentCount).map(i => `arg${i}`);
 }
 
-fdescribe('StandardPathParameterParser', () => {
+describe('StandardPathParameterParser', () => {
     it('should parse a path with an argument', () => {
         const path = 'path/:arg';
         const names = ['arg'];
@@ -57,7 +59,7 @@ fdescribe('StandardPathParameterParser', () => {
     });
 });
 
-fdescribe('CurlyPathParameterParser', () => {
+describe('CurlyPathParameterParser', () => {
     it('should parse a path with an argument', () => {
         const path = 'path/{arg}';
         const names = ['arg'];

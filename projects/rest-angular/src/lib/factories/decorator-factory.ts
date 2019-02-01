@@ -1,38 +1,55 @@
-import { RestMethodDecorator } from '../types/decorator-functions';
-import { HandleRestMethodFunction, HttpHandler } from '../http/http-handler';
-import { HttpClient } from '@angular/common/http';
-import { StandardPathParameterParser } from '../http/path-parser';
+import {RestMethodDecorator} from '../types/decorator-functions';
+import {HandleRestMethodFunction, HttpHandler} from '../http/http-handler';
+import {HttpClient} from '@angular/common/http';
+import {StandardPathParameterParser} from '../http/path-parser/standard-path-parser';
+import {RestAngularClient} from '../rest-angular-client';
 
 export const PATH_PARAM_MAP_META = 'path-param-map';
 export const BODY_PARAM_INDEX_META = 'body-param-index';
 
 export interface RestDecoratorFactory<ParamType, DecoratorType extends Function> {
-    makeDecorator(param: ParamType, handleCall: Function): DecoratorType;
+  makeDecorator(param: ParamType, handleCall: Function): DecoratorType;
 }
 
 export class RestMethodDecoratorFactory implements RestDecoratorFactory<string, RestMethodDecorator> {
-    public makeDecorator(path: string, handleCall: HandleRestMethodFunction): RestMethodDecorator {
-        return (target, key, descriptor) => {
-            descriptor.value = this.restMethodFactoryFunction(path, handleCall);
-        };
-    }
+  public makeDecorator(path: string, handleCall: HandleRestMethodFunction): RestMethodDecorator {
+    return (target, key, descriptor) => {
+      descriptor.value = this.getRestMethodCallHandler(path, handleCall, key);
+    };
+  }
 
-    private restMethodFactoryFunction(path: string, handleCall: HandleRestMethodFunction) {
-        return function (...args: any[]) {
-            const httpClient: HttpClient = this.httpClient;
-            const baseUrl: string = this.baseUrl();
+  private getRestMethodCallHandler(path: string, handleCall: HandleRestMethodFunction, key: string) {
+    const restCallHandler = new RestCallHandler(path, handleCall, key);
 
-            const pathParams: string[] = Reflect.getMetadata(PATH_PARAM_MAP_META, this);
-            const bodyParamIndex: any = Reflect.getMetadata(BODY_PARAM_INDEX_META, this);
+    return function (...args: any[]) {
+      const restClient = this;
+      return restCallHandler.makeRequest(args, restClient);
+    };
+  }
+}
 
-            const pathParamsParser = new StandardPathParameterParser(path, pathParams);
+// TODO: move RestCallHandler in a file
+class RestCallHandler {
+  constructor(
+    private readonly path: string,
+    private readonly handleCall: HandleRestMethodFunction,
+    private readonly key: string
+  ) {}
 
-            const pathWithParams = pathParamsParser.parse(args);
-            const parsedUrl = `${baseUrl}/${pathWithParams}`;
+  public makeRequest(args: string[], client: RestAngularClient) {
+    const httpClient: HttpClient = client.httpClient;
+    const baseUrl: string = client.baseUrl();
 
-            const body = HttpHandler.getBodyFromArgs(bodyParamIndex, args);
+    const pathParams: string[] = client.getPathParams(this.key);
+    const bodyParamIndex: any = client.getBodyParam(this.key);
 
-            return handleCall(httpClient, parsedUrl, body);
-        };
-    }
+    const pathParamsParser = new StandardPathParameterParser(this.path, pathParams);
+
+    const pathWithParams = pathParamsParser.parse(args);
+    const parsedUrl = `${baseUrl}/${pathWithParams}`;
+
+    const body = HttpHandler.getBodyFromArgs(bodyParamIndex, args);
+
+    return this.handleCall(httpClient, parsedUrl, body);
+  }
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BaseUrl, REST_BASE_URL, RestAngularClient, MISSING_REST_BASE_URL_ERROR } from './base-url-decorator';
+import { BaseUrl} from './base-url-decorator';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {REST_BASE_URL, RestAngularClient} from '../rest-angular-client';
 
 
 @Injectable()
@@ -70,6 +71,6 @@ describe('Base url not provided', () => {
     beforeEach(() => testBaseUrlInjectionService = TestBed.get(TestBaseUrlInjectionService));
 
     it('should throw an error', () => {
-        expect(testBaseUrlInjectionService.baseUrl).toThrowError(MISSING_REST_BASE_URL_ERROR);
+        expect(testBaseUrlInjectionService.baseUrl).toThrowError('REST_BASE_URL not provided');
     });
 });
