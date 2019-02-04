@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from './base-url-decorator';
-import {Body} from './body-decorator';
+import {BaseUrl} from '../base-url/base-url-decorator';
+import {Body} from '../body/body-decorator';
 import {Observable} from 'rxjs';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {POST} from './post-decorator';
-import {RestAngularClient} from '../rest-angular-client';
+import {RestAngularClient} from '../../rest-angular-client';
 
 @Injectable()
 @BaseUrl('base_url')
@@ -17,7 +17,7 @@ export class TestPostDecoratorService extends RestAngularClient {
   }
 
   @POST('examples')
-  public createExampleBody(@Body() example: any): Observable<any> {
+  public createExampleBody(@Body example: any): Observable<any> {
     return null;
   }
 }

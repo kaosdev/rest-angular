@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {BaseUrl} from './base-url-decorator';
-import {RestAngularClient} from '../rest-angular-client';
-import {POST} from './post-decorator';
+import {BaseUrl} from '../base-url/base-url-decorator';
+import {RestAngularClient} from '../../rest-angular-client';
+import {POST} from '../methods/post-decorator';
 import {Body} from './body-decorator';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
@@ -14,12 +14,12 @@ import {TestBed} from '@angular/core/testing';
 export class TestBodyDecoratorService extends RestAngularClient {
 
   @POST('examples')
-  public createExample(@Body() example: any): Observable<any> {
+  public createExample(@Body example: any): Observable<any> {
     return null;
   }
 
   @POST('examples/body')
-  public createExampleBody(@Body() body: any): Observable<any> {
+  public createExampleBody(@Body body: any): Observable<any> {
     return null;
   }
 }
@@ -77,7 +77,7 @@ describe('Body Decorator', () => {
       class TestBodyMultiError extends RestAngularClient {
 
         @POST('examples/body/multi')
-        public createExampleBodyMulti(@Body() body: any, @Body() body2: any): Observable<any> {
+        public createExampleBodyMulti(@Body body: any, @Body body2: any): Observable<any> {
           return null;
         }
       }

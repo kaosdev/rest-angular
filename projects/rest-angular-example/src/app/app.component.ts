@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TestService } from './test.service';
+import {Component, OnInit} from '@angular/core';
+import {TestGetService} from './get-decorator/test-get.service';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +7,9 @@ import { TestService } from './test.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'rest-angular-example';
-
-  todo: any;
-
-  constructor(
-    private testService: TestService
-  ) { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.testService.getTodo2(1).subscribe(todo => this.todo = todo);
   }
 }

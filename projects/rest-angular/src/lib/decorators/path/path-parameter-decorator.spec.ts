@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from './base-url-decorator';
-import {GET} from './get-decorator';
+import {BaseUrl} from '../base-url/base-url-decorator';
+import {GET} from '../methods/get-decorator';
 import {Path} from './path-parameter-decorator';
 import {Observable} from 'rxjs';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
-import {RestAngularClient} from '../rest-angular-client';
+import {RestAngularClient} from '../../rest-angular-client';
 
 
 @Injectable()
@@ -24,6 +24,11 @@ export class TestPathDecoratorService extends RestAngularClient {
 
   @GET('examples/:id/:param')
   public getExampleByIdAndParam(@Path('id') id: number, @Path('param') param: string): Observable<any> {
+    return null;
+  }
+
+  @GET('examples/:param/:id')
+  public getExampleByIdAndParamInvert(@Path('id') id: number, @Path('param') param: string): Observable<any> {
     return null;
   }
 }
@@ -55,6 +60,21 @@ describe('Path decorator', () => {
     );
 
     const mockRequest = httpMock.expectOne('base_url/examples/1/attr');
+    expect(mockRequest.request.method).toBe('GET');
+    mockRequest.flush(mockResponse);
+  });
+
+  it('should parse inverted parameters', () => {
+    const mockResponse = 'response';
+
+    testPathDecoratorService.getExampleByIdAndParamInvert(1, 'attr').subscribe(
+      res => {
+        expect(res).toBe(mockResponse);
+      },
+      err => fail(`expected a response, but got error: ${err}`)
+    );
+
+    const mockRequest = httpMock.expectOne('base_url/examples/attr/1');
     expect(mockRequest.request.method).toBe('GET');
     mockRequest.flush(mockResponse);
   });

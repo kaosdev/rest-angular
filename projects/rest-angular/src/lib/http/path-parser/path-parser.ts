@@ -1,6 +1,6 @@
 import {PathParamNotFoundError} from './path-parser-errors';
 
-interface PathParameterParser {
+export interface PathParameterParser {
   parse(parameterValues: any[]): string;
 }
 
@@ -9,8 +9,7 @@ export abstract class PathParameterParserImpl implements PathParameterParser {
   constructor(
     protected templatePath: string,
     protected parametersNames: string[]
-  ) {
-  }
+  ) {}
 
   public parse(parameterValues: any[]): string {
     if (!this.parametersNames) {

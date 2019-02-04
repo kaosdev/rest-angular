@@ -1,24 +1,20 @@
-import {RestMethodDecoratorFactory} from './decorator-factory';
-import {of, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {BaseUrl} from '../decorators';
+import {RestAngularClient} from '../rest-angular-client';
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RestAngularClient} from '../rest-angular-client';
-import {BaseUrl} from '../decorators/base-url-decorator';
+import {ParameterDecoratorFactory} from './parameter-decorator-factory';
 
-describe('RestMethodDecoratorFactory', () => {
-  const methodDecoratorFactory = new RestMethodDecoratorFactory();
-
-  const testDecorator = methodDecoratorFactory.makeDecorator('path', (http, url) => {
-    return of('hello');
+describe('ParameterDecoratorFactory', () => {
+  const testDecorator = ParameterDecoratorFactory.makeDecorator((endpoint, index) => {
+    endpoint.templatePath = index.toString();
+    return endpoint;
   });
 
   @Injectable()
   @BaseUrl('base')
   class TestRestAngularClient extends RestAngularClient {
-    @testDecorator
-    testDecoratorMethod(): Observable<string> {
-      return null;
+    testDecoratorMethod(@testDecorator param: number): void {
     }
   }
 
@@ -40,6 +36,6 @@ describe('RestMethodDecoratorFactory', () => {
   });
 
   it('should override method', () => {
-    testRestAngularClient.testDecoratorMethod().subscribe(res => expect(res).toBe('hello'));
+    expect(testRestAngularClient['endpointMeta'].get('testDecoratorMethod').templatePath).toEqual('0');
   });
 });

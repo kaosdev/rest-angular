@@ -1,0 +1,7 @@
+<p *ngIf="todo; else noTodoTpl" id="todo-result">
+  {{ todo | json }}
+</p>
+
+<ng-template #noTodoTpl>
+  No todo
+</ng-template>
