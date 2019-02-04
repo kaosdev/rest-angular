@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from '../base-url/base-url-decorator';
-import {Body} from '../body/body-decorator';
+import {BaseUrl} from '../client/base-url-decorator';
+import {Body} from '../parameters/body-decorator';
 import {Observable} from 'rxjs';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {BaseUrl} from '../base-url/base-url-decorator';
+import {BaseUrl} from '../client/base-url-decorator';
 import {RestAngularClient} from '../../rest-angular-client';
 import {POST} from '../methods/post-decorator';
 import {Body} from './body-decorator';

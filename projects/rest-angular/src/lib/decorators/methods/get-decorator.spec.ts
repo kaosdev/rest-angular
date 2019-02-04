@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from '../base-url/base-url-decorator';
+import {BaseUrl} from '../client/base-url-decorator';
 import {GET} from './get-decorator';
 import {Observable} from 'rxjs';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
-import {Path} from '../path/path-parameter-decorator';
+import {Path} from '../parameters/path-parameter-decorator';
 import {RestAngularClient} from '../../rest-angular-client';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from '../base-url/base-url-decorator';
+import {BaseUrl} from '../client/base-url-decorator';
 import {GET} from '../methods/get-decorator';
 import {Path} from './path-parameter-decorator';
 import {Observable} from 'rxjs';
