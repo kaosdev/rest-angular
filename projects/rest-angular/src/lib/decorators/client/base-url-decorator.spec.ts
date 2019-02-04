@@ -3,6 +3,8 @@ import {BaseUrl} from './base-url-decorator';
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {REST_BASE_URL, RestAngularClient} from '../../rest-angular-client';
+import {Body, POST} from '..';
+import {Observable} from 'rxjs';
 
 
 @Injectable()
@@ -13,13 +15,6 @@ export class TestBaseUrlDecoratorService extends RestAngularClient {
 
 @Injectable()
 export class TestBaseUrlInjectionService extends RestAngularClient {
-
-}
-
-@Injectable()
-@BaseUrl('base_url')
-@BaseUrl('should not be done')
-export class TestMultiBaseUrlService extends RestAngularClient {
 
 }
 
@@ -79,22 +74,15 @@ describe('Base url not provided', () => {
   });
 });
 
-
-/* TODO:
 describe('Multi Base url error', () => {
-  it('should throw an error', () => {
+  it('should throw error when using multiple base url decorators', () => {
     expect(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpClientTestingModule
-        ],
-        providers: [
-          TestMultiBaseUrlService,
-        ]
-      });
-      TestBed.get(TestMultiBaseUrlService);
-    }).toThrowError(`Multiple '@BaseUrl' Decorators are not allowed`);
+      @BaseUrl('base_url')
+      @BaseUrl('should not be done')
+      class TestMultiBaseUrlService extends RestAngularClient {
+      }
+    }).toThrowError(`Only one '@BaseUrl()' decorator for each client is supported`);
   });
-});*/
+});
 
 

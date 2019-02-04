@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import {HandleRestClientFunction} from '../types/decorator-functions';
 
 export interface Metadata<T> {
   updateMetadata(metadataKey: string, mapFn: (metadataValue: T) => T);
@@ -14,7 +15,7 @@ export class MetadataTarget implements Metadata<any> {
   ) {
   }
 
-  updateMetadata<T>(metadataKey: string, mapFn: (metadataValue: T) => T) {
+  updateMetadata<T>(metadataKey: string, mapFn: HandleRestClientFunction<T>) {
     const metadataValue: T = this.getMetadata(metadataKey);
     const mappedMetadataValue = mapFn(metadataValue);
     this.defineMetadata(metadataKey, mappedMetadataValue);
