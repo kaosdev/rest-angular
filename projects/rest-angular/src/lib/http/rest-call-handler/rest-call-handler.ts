@@ -1,7 +1,7 @@
 import {BodyParser, StandardBodyParser} from '../body-parser/body-parser';
 import {RestAngularClient} from '../../rest-angular-client';
 import {HttpClient} from '@angular/common/http';
-import {HandleRestMethodFunction} from '../../types/decorator-functions';
+import {HandleRestMethodFunction} from '../../factories/method-decorator-factory';
 
 export class RestCallHandler {
   constructor(

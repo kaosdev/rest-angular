@@ -70,7 +70,7 @@ describe('Base url not provided', () => {
         ]
       });
       TestBed.get(TestBaseUrlInjectionService);
-    }).toThrowError('REST_BASE_URL not provided');
+    }).toThrowError('InjectionToken Base url not provided');
   });
 });
 
