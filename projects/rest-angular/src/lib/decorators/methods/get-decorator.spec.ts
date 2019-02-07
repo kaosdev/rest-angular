@@ -86,4 +86,22 @@ describe('@GET Decorator - Errors', () => {
       }
     }).toThrowError(`Cannot mix decorators in the same method`);
   });
+
+  @Injectable()
+  @BaseUrl('base_url')
+  class TestGetWithBodyDecoratorService extends RestAngularClient {
+
+    @GET('path1')
+    public getWithBody(@Body body: any): Observable<any> {
+      return null;
+    }
+  }
+
+  const providers = getDecoratorProviders(TestGetWithBodyDecoratorService);
+
+  it('should throw error when using @Body and @GET', () => {
+    expect(() => {
+      providers.testDecoratorService.getWithBody('body').subscribe();
+    }).toThrowError(`@Body decorator is not allowed on @GET`);
+  });
 });
