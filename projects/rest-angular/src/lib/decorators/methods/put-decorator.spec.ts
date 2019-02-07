@@ -11,12 +11,12 @@ describe('PUT Decorator', () => {
   class TestGetDecoratorService extends RestAngularClient {
 
     @PUT('examples')
-    public getExamples(@Body body: any): Observable<any> {
+    public updateExamples(@Body body: any): Observable<any> {
       return null;
     }
 
     @PUT('')
-    public getRoot(): Observable<any> {
+    public updateRoot(): Observable<any> {
       return null;
     }
   }
@@ -26,7 +26,7 @@ describe('PUT Decorator', () => {
   it('should make a PUT', () => {
     const mockResponse = 'response';
 
-    providers.testDecoratorService.getExamples('body').subscribe(
+    providers.testDecoratorService.updateExamples('body').subscribe(
       res => {
         expect(res).toBe(mockResponse);
       },
@@ -42,7 +42,7 @@ describe('PUT Decorator', () => {
   it('should make a PUT to base url', () => {
     const mockResponse = 'response';
 
-    providers.testDecoratorService.getRoot().subscribe(
+    providers.testDecoratorService.updateRoot().subscribe(
       res => {
         expect(res).toBe(mockResponse);
       },
@@ -64,7 +64,7 @@ describe('@PUT Decorator - Errors', () => {
 
         @PUT('path1')
         @PUT('path2')
-        public getMultiPath(): Observable<any> {
+        public updateMultiPath(): Observable<any> {
           return null;
         }
       }
@@ -79,7 +79,7 @@ describe('@PUT Decorator - Errors', () => {
 
         @PUT('path1')
         @GET('path2')
-        public getOrPost(): Observable<any> {
+        public updateOrGet(): Observable<any> {
           return null;
         }
       }
