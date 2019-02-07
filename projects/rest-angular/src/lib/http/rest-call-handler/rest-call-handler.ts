@@ -1,31 +1,38 @@
-import {BodyParser, StandardBodyParser} from '../body-parser/body-parser';
-import {RestAngularClient} from '../../rest-angular-client';
-import {HttpClient} from '@angular/common/http';
-import {HandleRestMethodFunction} from '../../factories/method-decorator-factory';
+import {PathParameterParser} from '../path-parser/path-parser';
+import {BodyParser} from '../body-parser/body-parser';
 
 export class RestCallHandler {
   constructor(
-    private readonly path: string,
-    private readonly handleCall: HandleRestMethodFunction,
-    private readonly key: string
-  ) {
+    private readonly baseUrl: string,
+    private readonly pathParser: PathParameterParser,
+    private readonly bodyParser: BodyParser) {
   }
 
-  public makeRequest(args: string[], client: RestAngularClient) {
-    const parsedUrl = this.getParsedUrlOfMethod(args, client);
-    const body = this.getParsedBodyOfMethod(args, client);
-
-    return this.handleCall(client.httpClient, parsedUrl, body);
+  public getRequest(args: any[]): RestRequest {
+    return {
+      url: this.getUrl(args),
+      body: this.getBody(args)
+    };
   }
 
-  public getParsedUrlOfMethod(args: any[], client: RestAngularClient): string {
-    const pathParamParser = client.pathParserMap[this.key];
-    const pathWithParams = pathParamParser.parse(args);
+  private getUrl(args: any[]): string {
+    let url = this.baseUrl;
 
-    return `${client.baseUrl}/${pathWithParams}`;
+    const parsedPath = this.pathParser.parse(args);
+
+    if (parsedPath) {
+      url += `/${parsedPath}`;
+    }
+
+    return url;
   }
 
-  public getParsedBodyOfMethod(args: any[], client: RestAngularClient): string {
-    return client.bodyParserMap[this.key].getBodyFromArgs(args);
+  private getBody(args): any {
+    return this.bodyParser.getBodyFromArgs(args);
   }
+}
+
+export interface RestRequest {
+  url: string;
+  body: string;
 }

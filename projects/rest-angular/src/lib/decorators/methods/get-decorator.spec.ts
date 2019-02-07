@@ -1,103 +1,89 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from '../client/base-url-decorator';
-import {GET} from './get-decorator';
 import {Observable} from 'rxjs';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {Path} from '../parameters/path-parameter-decorator';
+
+import {BaseUrl, Body, POST} from '../';
+import {GET} from './get-decorator';
 import {RestAngularClient} from '../../rest-angular-client';
+import {getDecoratorProviders} from '../decorators-utils.spec';
 
-@Injectable()
-@BaseUrl('base_url')
-export class TestGetDecoratorService extends RestAngularClient {
-
-  @GET('examples')
-  public getExamples(): Observable<any> {
-    return null;
-  }
-}
-
-@Injectable()
-@BaseUrl('base_url')
-export class TestGetPathParameterService extends RestAngularClient {
-
-  @GET('examples/:id')
-  public getExample(@Path('id') id: number): Observable<any> {
-    return null;
-  }
-
-  @GET('examples/:id/param/:param')
-  public getExampleParam(
-    @Path('id') id: number,
-    @Path('param') param: string
-  ): Observable<any> {
-    return null;
-  }
-}
 
 describe('GET Decorator', () => {
-  let testGetDecoratorService: TestGetDecoratorService;
-  let testGetPathParameterService: TestGetPathParameterService;
-  let httpMock: HttpTestingController;
+  @Injectable()
+  @BaseUrl('base_url')
+  class TestGetDecoratorService extends RestAngularClient {
 
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HttpClientTestingModule
-    ],
-    providers: [
-      TestGetDecoratorService,
-      TestGetPathParameterService
-    ]
-  }));
+    @GET('examples')
+    public getExamples(): Observable<any> {
+      return null;
+    }
 
-  beforeEach(() => testGetDecoratorService = TestBed.get(TestGetDecoratorService));
-  beforeEach(() => testGetPathParameterService = TestBed.get(TestGetPathParameterService));
-  beforeEach(() => httpMock = TestBed.get(HttpTestingController));
+    @GET('')
+    public getRoot(): Observable<any> {
+      return null;
+    }
+  }
+
+  const providers = getDecoratorProviders(TestGetDecoratorService);
 
   it('should make a GET', () => {
     const mockResponse = 'response';
 
-    testGetDecoratorService.getExamples().subscribe(
+    providers.testDecoratorService.getExamples().subscribe(
       res => {
         expect(res).toBe(mockResponse);
       },
       err => fail(`expected a response, but got error: ${err}`)
     );
 
-    const mockRequest = httpMock.expectOne('base_url/examples');
+    const mockRequest = providers.httpMock.expectOne('base_url/examples');
     expect(mockRequest.request.method).toBe('GET');
     mockRequest.flush(mockResponse);
   });
 
-  it('should make a GET with passed path parameter', () => {
+  it('should make a GET to base url', () => {
     const mockResponse = 'response';
 
-    testGetPathParameterService.getExample(1).subscribe(
+    providers.testDecoratorService.getRoot().subscribe(
       res => {
         expect(res).toBe(mockResponse);
       },
       err => fail(`expected a response, but got error: ${err}`)
     );
 
-    const mockRequest = httpMock.expectOne('base_url/examples/1');
+    const mockRequest = providers.httpMock.expectOne('base_url');
     expect(mockRequest.request.method).toBe('GET');
     mockRequest.flush(mockResponse);
   });
+});
 
-  it('should make a GET with 2 parameters', () => {
-    const mockResponse = 'response';
+describe('@GET Decorator - Errors', () => {
+  it('should throw error when using multiple GET decorators', () => {
+    expect(() => {
+      @Injectable()
+      @BaseUrl('base_url')
+      class TestGetDecoratorService extends RestAngularClient {
 
-    testGetPathParameterService.getExampleParam(1, 'two').subscribe(
-      res => {
-        expect(res).toBe(mockResponse);
-      },
-      err => fail(`expected a response, but got error: ${err}`)
-    );
-
-    const mockRequest = httpMock.expectOne('base_url/examples/1/param/two');
-    expect(mockRequest.request.method).toBe('GET');
-    mockRequest.flush(mockResponse);
+        @GET('path1')
+        @GET('path2')
+        public getMultiPath(): Observable<any> {
+          return null;
+        }
+      }
+    }).toThrowError(`Only one '@GET()' decorator for each method is supported`);
   });
 
-  afterEach(() => httpMock.verify());
+  it('should throw error when using mixed decorators', () => {
+    expect(() => {
+      @Injectable()
+      @BaseUrl('base_url')
+      class TestGetDecoratorService extends RestAngularClient {
+
+        @GET('path1')
+        @POST('path2')
+        public getOrPost(): Observable<any> {
+          return null;
+        }
+      }
+    }).toThrowError(`Cannot mix decorators in the same method`);
+  });
 });
