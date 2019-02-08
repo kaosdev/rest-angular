@@ -24,12 +24,12 @@ export interface RestEndpoint {
 
 export abstract class RestAngularClient {
   private endpointMeta: EndpointMetadata;
-  private metadataTarget: MetadataTarget;
+  private readonly metadataTarget: MetadataTarget;
 
   private readonly pathParamParserFactory: PathParserFactory;
   private readonly bodyParserFactory: BodyParserFactory;
 
-  private endpointMap: Record<string, RestEndpoint> = {};
+  private readonly endpointMap: Record<string, RestEndpoint> = {};
   private readonly callHandlerMap: Record<string, RestCallHandler> = {};
 
   public readonly baseUrl: string;

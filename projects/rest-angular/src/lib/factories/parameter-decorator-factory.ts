@@ -10,7 +10,7 @@ export type RestParameterDecorator = (
 export type HandleRestParameterFunction = (endpoint: RestEndpoint, index: number) => RestEndpoint;
 
 export class ParameterDecoratorFactory {
-  static makeDecorator(endpointMapping: HandleRestParameterFunction): RestParameterDecorator {
+  makeDecorator(endpointMapping: HandleRestParameterFunction): RestParameterDecorator {
     return function (target, propertyKey, index) {
       const endpointMeta = new EndpointMetadata(new MetadataTarget(target));
 
