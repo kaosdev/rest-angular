@@ -8,7 +8,7 @@ import {PUT} from './put.decorator';
 describe('@PUT Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetDecoratorService extends RestAngularClient {
+  class TestPutDecoratorService extends RestAngularClient {
 
     @PUT('examples')
     public updateExamples(@Body body: any): Observable<any> {
@@ -21,7 +21,7 @@ describe('@PUT Decorator', () => {
     }
   }
 
-  const providers = getDecoratorProviders(TestGetDecoratorService);
+  const providers = getDecoratorProviders(TestPutDecoratorService);
 
   it('should make a PUT', () => {
     const mockResponse = 'response';
@@ -60,7 +60,7 @@ describe('@PUT Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @PUT('path1')
         @PUT('path2')
@@ -75,7 +75,7 @@ describe('@PUT Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @PUT('path1')
         @GET('path2')

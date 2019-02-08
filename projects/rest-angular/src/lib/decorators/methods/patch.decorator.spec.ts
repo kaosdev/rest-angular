@@ -41,7 +41,7 @@ describe('@PATCH Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @PATCH('path1')
         @PATCH('path2')
@@ -56,7 +56,7 @@ describe('@PATCH Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @PATCH('path1')
         @GET('path2')

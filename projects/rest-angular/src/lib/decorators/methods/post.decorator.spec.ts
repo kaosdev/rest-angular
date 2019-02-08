@@ -42,7 +42,7 @@ describe('@POST Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @POST('path1')
         @POST('path2')
@@ -57,7 +57,7 @@ describe('@POST Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularClient {
 
         @POST('path1')
         @PATCH('path2')
