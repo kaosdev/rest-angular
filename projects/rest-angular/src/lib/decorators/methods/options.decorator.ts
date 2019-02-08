@@ -1,7 +1,12 @@
 import {MethodDecoratorFactory} from '../../factories/method-decorator-factory';
+import {NotAllowedDecoratorError} from '../../errors/not-allowed-decorator-error';
 
 export const OPTIONS = (path: string) => MethodDecoratorFactory.makeDecorator('OPTIONS', path, (http, request) => {
-    return http.options(
-        request.url
-    );
+  if (request.body) {
+    throw new NotAllowedDecoratorError('Body', 'OPTIONS');
+  }
+
+  return http.options(
+    request.url
+  );
 });
