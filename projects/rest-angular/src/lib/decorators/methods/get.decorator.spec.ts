@@ -7,7 +7,7 @@ import {RestAngularClient} from '../../rest-angular-client';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 
 
-describe('GET Decorator', () => {
+describe('@GET Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
   class TestGetDecoratorService extends RestAngularClient {

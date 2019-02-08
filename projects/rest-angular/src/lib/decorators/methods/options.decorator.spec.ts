@@ -2,17 +2,17 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 
-import {BaseUrl} from '..';
+import {BaseUrl, GET} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
 import {OPTIONS} from './options.decorator';
 
-describe('OPTIONS Decorator', () => {
+describe('@OPTIONS Decorator', () => {
     @Injectable()
     @BaseUrl('base_url')
     class TestOptionsDecoratorService extends RestAngularClient {
 
         @OPTIONS('examples')
-        public createExample(): Observable<any> {
+        public testExample(): Observable<any> {
             return null;
         }
     }
@@ -22,7 +22,7 @@ describe('OPTIONS Decorator', () => {
     it('should make a OPTIONS', () => {
         const mockResponse = 'response';
 
-        providers.testDecoratorService.createExample().subscribe(
+        providers.testDecoratorService.testExample().subscribe(
             res => {
                 expect(res).toBe(mockResponse);
             },
@@ -33,4 +33,36 @@ describe('OPTIONS Decorator', () => {
         expect(mockRequest.request.method).toBe('OPTIONS');
         mockRequest.flush(mockResponse);
     });
+});
+
+describe('@OPTIONS Decorator - Errors', () => {
+  it('should throw error when using multiple OPTIONS decorators', () => {
+    expect(() => {
+      @Injectable()
+      @BaseUrl('base_url')
+      class TestDecoratorService extends RestAngularClient {
+
+        @OPTIONS('path1')
+        @OPTIONS('path2')
+        public options(): Observable<any> {
+          return null;
+        }
+      }
+    }).toThrowError(`Only one '@OPTIONS()' decorator for each method is supported`);
+  });
+
+  it('should throw error when using mixed decorators', () => {
+    expect(() => {
+      @Injectable()
+      @BaseUrl('base_url')
+      class TestDecoratorService extends RestAngularClient {
+
+        @OPTIONS('path1')
+        @GET('path2')
+        public options(): Observable<any> {
+          return null;
+        }
+      }
+    }).toThrowError(`Cannot mix decorators in the same method`);
+  });
 });

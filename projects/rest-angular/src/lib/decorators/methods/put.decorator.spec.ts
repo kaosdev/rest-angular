@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 import {PUT} from './put.decorator';
 
-describe('PUT Decorator', () => {
+describe('@PUT Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
   class TestGetDecoratorService extends RestAngularClient {
