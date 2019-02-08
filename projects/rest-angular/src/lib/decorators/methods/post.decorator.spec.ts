@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 
 import {BaseUrl} from '..';
-import {POST} from './post-decorator';
+import {POST} from './post.decorator';
 import {RestAngularClient} from '../../rest-angular-client';
 
 describe('POST Decorator', () => {

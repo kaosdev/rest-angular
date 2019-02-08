@@ -3,7 +3,7 @@ import {BaseUrl, GET, Path, POST} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
-import {DELETE} from './delete-decorator';
+import {DELETE} from './delete.decorator';
 
 describe('DELETE Decorator', () => {
   @Injectable()

@@ -3,7 +3,7 @@ import {BaseUrl, Body, GET} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
-import {PUT} from './put-decorator';
+import {PUT} from './put.decorator';
 
 describe('PUT Decorator', () => {
   @Injectable()
