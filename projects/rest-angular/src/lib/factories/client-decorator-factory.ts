@@ -8,7 +8,7 @@ export type RestClientDecorator = (
 export type HandleRestClientFunction<T> = (metadataValue: T) => T;
 
 export class ClientDecoratorFactory {
-  static makeDecorator<T>(decoratorKey: string, metadataMapping: HandleRestClientFunction<T>): RestClientDecorator {
+  makeDecorator<T>(decoratorKey: string, metadataMapping: HandleRestClientFunction<T>): RestClientDecorator {
     return function (ctor) {
       const metadataTarget = new MetadataTarget(ctor.prototype);
 

@@ -15,7 +15,7 @@ export type RestMethodDecorator = (
 export type HandleRestMethodFunction = (httpClient: HttpClient, request: RestRequest) => Observable<any>;
 
 export class MethodDecoratorFactory {
-  public static makeDecorator(name: string, path: string, handleCall: HandleRestMethodFunction): RestMethodDecorator {
+  public makeDecorator(name: string, path: string, handleCall: HandleRestMethodFunction): RestMethodDecorator {
     return (target, key, descriptor) => {
       const endpoint = new EndpointMetadata(new MetadataTarget(target));
 
@@ -34,13 +34,14 @@ export class MethodDecoratorFactory {
         return endpointMap;
       });
 
-      descriptor.value = MethodDecoratorFactory.getRestMethodCallHandler(key);
+      descriptor.value = getRestMethodCallHandler(key);
     };
   }
 
-  private static getRestMethodCallHandler(key: string) {
-    return function (...args: any[]) {
-      return (this as RestAngularClient).makeRequest(key, args);
-    };
-  }
+}
+
+function getRestMethodCallHandler(key: string) {
+  return function (...args: any[]) {
+    return (this as RestAngularClient).makeRequest(key, args);
+  };
 }

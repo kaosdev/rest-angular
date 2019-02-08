@@ -1,6 +1,6 @@
 import {ParameterDecoratorFactory} from '../../factories/parameter-decorator-factory';
 
-export const Path = (name: string) => ParameterDecoratorFactory.makeDecorator((endpoint, index) => {
+export const Path = (name: string) => new ParameterDecoratorFactory().makeDecorator((endpoint, index) => {
   if (!endpoint.pathParametersName) {
     endpoint.pathParametersName = [];
   }
