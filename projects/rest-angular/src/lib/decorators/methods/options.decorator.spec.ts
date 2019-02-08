@@ -7,32 +7,32 @@ import {RestAngularClient} from '../../rest-angular-client';
 import {OPTIONS} from './options.decorator';
 
 describe('@OPTIONS Decorator', () => {
-    @Injectable()
-    @BaseUrl('base_url')
-    class TestOptionsDecoratorService extends RestAngularClient {
+  @Injectable()
+  @BaseUrl('base_url')
+  class TestOptionsDecoratorService extends RestAngularClient {
 
-        @OPTIONS(':id')
-        public testExample(@Path('id') id: number): Observable<any> {
-            return null;
-        }
+    @OPTIONS(':id')
+    public testExample(@Path('id') id: number): Observable<any> {
+      return null;
     }
+  }
 
-    const providers = getDecoratorProviders(TestOptionsDecoratorService);
+  const providers = getDecoratorProviders(TestOptionsDecoratorService);
 
-    it('should make a OPTIONS', () => {
-        const mockResponse = 'response';
+  it('should make a OPTIONS', () => {
+    const mockResponse = 'response';
 
-        providers.testDecoratorService.testExample(21).subscribe(
-            res => {
-                expect(res).toBe(mockResponse);
-            },
-            err => fail(`expected a response, but got error: ${err}`)
-        );
+    providers.testDecoratorService.testExample(21).subscribe(
+      res => {
+        expect(res).toBe(mockResponse);
+      },
+      err => fail(`expected a response, but got error: ${err}`)
+    );
 
-        const mockRequest = providers.httpMock.expectOne('base_url/21');
-        expect(mockRequest.request.method).toBe('OPTIONS');
-        mockRequest.flush(mockResponse);
-    });
+    const mockRequest = providers.httpMock.expectOne('base_url/21');
+    expect(mockRequest.request.method).toBe('OPTIONS');
+    mockRequest.flush(mockResponse);
+  });
 });
 
 describe('@OPTIONS Decorator - Errors', () => {
