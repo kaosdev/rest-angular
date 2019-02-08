@@ -18,3 +18,9 @@ export class TestService extends RestAngularClient {
 
 }
 ```
+
+## Installation
+
+```
+npm install rest-angular-decorators
+```
