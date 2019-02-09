@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {RestAngularClient, POST} from 'rest-angular';
+import {Body, POST, RestAngularClient} from 'rest-angular-decorators';
 import {Observable} from 'rxjs';
-import {Body} from '../../../../rest-angular/src/lib/decorators';
 
 @Injectable({
   providedIn: 'root'

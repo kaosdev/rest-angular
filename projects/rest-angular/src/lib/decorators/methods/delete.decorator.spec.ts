@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl, Body, Path, POST} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
-import {DELETE} from './delete.decorator';
+import {BaseUrl, Body, DELETE, Path, POST} from '..';
 
 describe('@DELETE Decorator', () => {
   @Injectable()

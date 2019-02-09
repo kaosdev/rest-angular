@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 
-import {BaseUrl, Body, GET, Path} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
-import {OPTIONS} from './options.decorator';
+import {BaseUrl, Body, GET, OPTIONS, Path} from '..';
 
 describe('@OPTIONS Decorator', () => {
   @Injectable()

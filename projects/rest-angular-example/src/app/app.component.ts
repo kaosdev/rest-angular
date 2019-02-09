@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TestGetService} from './get-decorator/test-get.service';
 
 @Component({
   selector: 'app-root',

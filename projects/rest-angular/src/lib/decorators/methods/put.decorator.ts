@@ -1,8 +1,10 @@
-import {MethodDecoratorFactory} from '../../factories/method-decorator-factory';
+import {MethodDecoratorFactory, RestMethodDecorator} from '../../factories/method-decorator-factory';
 
-export const PUT = (path: string) => new MethodDecoratorFactory().makeDecorator('PUT', path, (http, request) => {
-  return http.put(
-    request.url,
-    request.body
-  );
-});
+export function PUT(path: string): RestMethodDecorator {
+  return new MethodDecoratorFactory().makeDecorator('PUT', path, (http, request) => {
+    return http.put(
+      request.url,
+      request.body
+    );
+  });
+}

@@ -1,7 +1,7 @@
-import {ParameterDecoratorFactory} from '../../factories/parameter-decorator-factory';
+import {ParameterDecoratorFactory, RestParameterDecorator} from '../../factories/parameter-decorator-factory';
 import {MultipleDecoratorsError} from '../../errors/multiple-decorators-error';
 
-export const Body = new ParameterDecoratorFactory().makeDecorator((endpoint, index) => {
+export const Body: RestParameterDecorator = new ParameterDecoratorFactory().makeDecorator((endpoint, index) => {
   if (endpoint.bodyParamIndex !== undefined) {
     throw new MultipleDecoratorsError('Body', 'method');
   }

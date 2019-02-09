@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl} from '..';
-import {GET} from '..';
-import {Path} from './path.decorator';
 import {Observable} from 'rxjs';
 import {RestAngularClient} from '../../rest-angular-client';
 import {CurlyPathParserFactory, PathParserFactory} from '../../http/path-parser/path-parser-factory';
 import {getDecoratorProviders} from '../decorators-utils.spec';
+import {BaseUrl, GET, Path} from '..';
 
 describe('Path decorator parameters parsing', () => {
 

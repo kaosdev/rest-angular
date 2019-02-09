@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 
-import {BaseUrl} from '..';
-import {POST} from './post.decorator';
 import {RestAngularClient} from '../../rest-angular-client';
-import {PATCH} from './patch.decorator';
+import {BaseUrl, PATCH, POST} from '..';
 
 describe('@POST Decorator', () => {
   @Injectable()

@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {BaseUrl} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
-import {POST} from '..';
 import {Body} from './body.decorator';
 import {getDecoratorProviders} from '../decorators-utils.spec';
 import {BodyParserFactory} from '../../http/body-parser/body-parser-factory';
+import {BaseUrl, POST} from '..';
 
 
 describe('Body Decorator', () => {

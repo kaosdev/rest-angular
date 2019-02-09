@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "rest-angular": [
-        "dist/rest-angular"
+      "rest-angular-decorators": [
+        "dist/rest-angular-decorators"
       ],
-      "rest-angular/*": [
-        "dist/rest-angular/*"
+      "rest-angular-decorators/*": [
+        "dist/rest-angular-decorators/*"
       ]
     }
   }

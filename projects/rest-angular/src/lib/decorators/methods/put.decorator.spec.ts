@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BaseUrl, Body, GET} from '..';
 import {RestAngularClient} from '../../rest-angular-client';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from '../decorators-utils.spec';
-import {PUT} from './put.decorator';
+import {BaseUrl, Body, GET, PUT} from '..';
 
 describe('@PUT Decorator', () => {
   @Injectable()

@@ -1,8 +1,10 @@
-import {MethodDecoratorFactory} from '../../factories/method-decorator-factory';
+import {MethodDecoratorFactory, RestMethodDecorator} from '../../factories/method-decorator-factory';
 
-export const POST = (path: string) => new MethodDecoratorFactory().makeDecorator('POST', path, (http, request) => {
-  return http.post(
-    request.url,
-    request.body
-  );
-});
+export function POST(path: string): RestMethodDecorator {
+  return new MethodDecoratorFactory().makeDecorator('POST', path, (http, request) => {
+    return http.post(
+      request.url,
+      request.body
+    );
+  });
+}
