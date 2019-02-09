@@ -7,7 +7,7 @@
     "build:lib": "ng build rest-angular",
     "build:example-app": "ng build rest-angular-example --prod",
     "test": "ng test",
-    "deploy:lib": "cd dist/rest-angular && npm publish"
+    "deploy:lib": "cd dist/rest-angular-decorators && npm publish"
   },
   "private": true,
   "dependencies": {

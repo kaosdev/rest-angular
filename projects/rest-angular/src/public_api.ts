@@ -1,9 +1,22 @@
-/*
- * Public API Surface of rest-angular
- */
 
-export * from './lib/decorators/index';
-export * from './lib/http/path-parser/path-parser-factory';
-export * from './lib/rest-angular-client';
-export {MissingInjectionError} from './lib/errors/missing-injection-error';
+export {
+  GET,
+  PUT,
+  POST,
+  PATCH,
+  DELETE,
+  OPTIONS,
+  Path,
+  Body,
+  BaseUrl,
+} from './lib/decorators/index';
 
+export {
+  PathParserFactory,
+  CurlyPathParserFactory,
+  StandardPathParserFactory
+} from './lib/http/path-parser/path-parser-factory';
+export {
+  RestAngularClient,
+  REST_BASE_URL,
+} from './lib/rest-angular-client';

@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {GET, Path, RestAngularClient} from 'rest-angular-decorators';
+import {BaseUrl, GET, Path, RestAngularClient} from 'rest-angular-decorators';
 
 @Injectable({
   providedIn: 'root'
 })
+@BaseUrl('base')
 export class TestGetService extends RestAngularClient {
 
   @GET('todos')

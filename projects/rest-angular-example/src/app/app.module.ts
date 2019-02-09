@@ -18,8 +18,8 @@ import {CurlyPathParserFactory, PathParserFactory, REST_BASE_URL} from 'rest-ang
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: 'test-get', component: TestGetComponent },
-      { path: 'test-post', component: TestPostComponent },
+      {path: 'test-get', component: TestGetComponent},
+      {path: 'test-post', component: TestPostComponent},
     ])
   ],
   providers: [
