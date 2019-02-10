@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {RestAngularClient} from '../../rest-angular-client';
-import {getDecoratorProviders} from '../decorators-utils.spec';
+import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, GET, Path} from '..';
-import {Query} from './query.decorator';
+import {Query} from '../parameter.decorators';
 
 describe('@Query decorator', () => {
 

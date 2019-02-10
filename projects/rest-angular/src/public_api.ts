@@ -1,16 +1,5 @@
 
-export {
-  GET,
-  PUT,
-  POST,
-  PATCH,
-  DELETE,
-  OPTIONS,
-  Path,
-  Body,
-  BaseUrl,
-  Query
-} from './lib/decorators/index';
+export * from './lib/decorators';
 
 export {
   PathParserFactory,

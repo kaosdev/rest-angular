@@ -1,4 +1,4 @@
-import {Constructor} from '../types/constructor';
+import {Constructor} from '../../types/constructor';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 

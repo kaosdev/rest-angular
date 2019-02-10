@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {REST_BASE_URL, RestAngularClient} from '../../rest-angular-client';
-import {BaseUrl} from './base-url.decorator';
+import {BaseUrl} from '../client.decorators';
 
 
 @Injectable()

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {RestAngularClient} from '../../rest-angular-client';
-import {Body} from './body.decorator';
-import {getDecoratorProviders} from '../decorators-utils.spec';
+import {Body} from '../parameter.decorators';
+import {getDecoratorProviders} from './decorators-utils.spec';
 import {BodyParserFactory} from '../../http/body-parser/body-parser-factory';
 import {BaseUrl, POST} from '..';
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {getDecoratorProviders} from '../decorators-utils.spec';
+import {getDecoratorProviders} from './decorators-utils.spec';
 
 import {RestAngularClient} from '../../rest-angular-client';
 import {BaseUrl, Body, GET, OPTIONS, Path} from '..';
