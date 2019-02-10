@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {BaseUrl, GET, Path, RestAngularClient} from 'rest-angular-decorators';
+import {GET, Path, Query, RestAngularClient} from 'rest-angular-decorators';
 
 @Injectable({
   providedIn: 'root'
 })
-@BaseUrl('base')
 export class TestGetService extends RestAngularClient {
 
-  @GET('todos')
-  getTodos(): Observable<any[]> {
+  @GET('products')
+  getTodos(@Query('name') search: string): Observable<any[]> {
     return null;
   }
 

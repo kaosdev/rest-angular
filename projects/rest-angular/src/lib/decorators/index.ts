@@ -6,4 +6,5 @@ export {DELETE} from './methods/delete.decorator';
 export {OPTIONS} from './methods/options.decorator';
 export {Path} from './parameters/path.decorator';
 export {Body} from './parameters/body.decorator';
+export {Query} from './parameters/query.decorator';
 export {BaseUrl} from './client/base-url.decorator';

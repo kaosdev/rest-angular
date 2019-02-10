@@ -8,7 +8,10 @@ export function DELETE(path: string): RestMethodDecorator {
     }
 
     return http.delete(
-      request.url
+      request.url,
+      {
+        params: request.queryParams
+      }
     );
   });
 }

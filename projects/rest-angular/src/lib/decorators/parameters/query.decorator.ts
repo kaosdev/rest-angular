@@ -1,13 +1,14 @@
 import {ParameterDecoratorFactory, RestParameterDecorator} from '../../factories/parameter-decorator-factory';
 
-export function Path(name: string): RestParameterDecorator {
+export function Query(name: string): RestParameterDecorator {
   return new ParameterDecoratorFactory().makeDecorator((endpoint, index) => {
-    if (!endpoint.pathParameterNames) {
-      endpoint.pathParameterNames = [];
+    if (!endpoint.queryParameterNames) {
+      endpoint.queryParameterNames = [];
     }
 
-    endpoint.pathParameterNames[index] = name;
+    endpoint.queryParameterNames[index] = name;
 
     return endpoint;
   });
 }
+

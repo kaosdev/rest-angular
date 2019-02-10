@@ -7,6 +7,8 @@ export function GET(path: string) {
       throw new NotAllowedDecoratorError('Body', 'GET');
     }
 
-    return http.get(request.url);
+    return http.get(request.url, {
+      params: request.queryParams
+    });
   });
 }

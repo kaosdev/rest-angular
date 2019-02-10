@@ -9,6 +9,7 @@ export {
   Path,
   Body,
   BaseUrl,
+  Query
 } from './lib/decorators/index';
 
 export {

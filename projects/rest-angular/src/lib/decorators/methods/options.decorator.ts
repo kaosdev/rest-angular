@@ -8,7 +8,10 @@ export function OPTIONS(path: string): RestMethodDecorator {
     }
 
     return http.options(
-      request.url
+      request.url,
+      {
+        params: request.queryParams
+      }
     );
   });
 }

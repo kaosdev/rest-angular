@@ -4,7 +4,10 @@ export function POST(path: string): RestMethodDecorator {
   return new MethodDecoratorFactory().makeDecorator('POST', path, (http, request) => {
     return http.post(
       request.url,
-      request.body
+      request.body,
+      {
+        params: request.queryParams
+      }
     );
   });
 }
