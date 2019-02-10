@@ -36,3 +36,13 @@ export function Query(name: string): RestParameterDecorator {
     return endpoint;
   });
 }
+
+export const QueryMap: RestParameterDecorator = PARAMETER_DECORATOR_FACTORY.makeDecorator((endpoint, index) => {
+  if (!endpoint.queryParameterNames) {
+    endpoint.queryParameterNames = [];
+  }
+
+  endpoint.queryParameterNames[index] = '';
+
+  return endpoint;
+});

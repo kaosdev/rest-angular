@@ -17,14 +17,18 @@ export class StandardQueryParser implements QueryParser {
   }
 
   private getParamsObject(args: any[]): { [key: string]: any } {
-    const queryObject = {};
+    let queryObject = {};
 
     if (this.paramNames) {
       this.paramNames.forEach((paramName, index) => {
         const param = args[index];
 
         if (param) {
-          queryObject[paramName] = this.parseParam(param);
+          if (paramName) {
+            queryObject[paramName] = this.parseParam(param);
+          } else {
+            queryObject = {...queryObject, ...param};
+          }
         }
       });
     }
@@ -32,7 +36,7 @@ export class StandardQueryParser implements QueryParser {
     return queryObject;
   }
 
-  private parseParam(param: any): string {
+  private parseParam(param: any): any {
     let parsedParam = String(param);
 
     if (param instanceof Array) {
