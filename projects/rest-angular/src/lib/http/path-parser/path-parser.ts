@@ -1,24 +1,21 @@
 import {PathParamNotFoundError} from './path-parser-errors';
+import {ParameterParser} from '../../types/parameter-parser';
+import {RestEndpoint} from '../../types/rest-endpoint';
 
-export interface PathParameterParser {
-  parse(parameterValues: any[]): string;
-}
-
-export abstract class PathParameterParserImpl implements PathParameterParser {
+export abstract class PathParameterParser implements ParameterParser<any> {
+  REQUEST_FIELD = 'url';
 
   constructor(
-    protected baseUrl: string,
-    protected templatePath: string,
-    protected parametersNames: string[]
+    protected endpoint: RestEndpoint,
   ) {
   }
 
   public parse(parameterValues: any[]): string {
-    let url = this.baseUrl;
-    let parsedPath = this.templatePath;
+    let url = this.endpoint.baseUrl;
+    let parsedPath = this.endpoint.templatePath;
 
-    if (this.parametersNames) {
-      this.parametersNames.forEach((paramName, i) => {
+    if (this.endpoint.pathParameterNames) {
+      this.endpoint.pathParameterNames.forEach((paramName, i) => {
         parsedPath = this.parseParameterOrThrowError(parsedPath, paramName, parameterValues[i]);
       });
     }
@@ -34,7 +31,7 @@ export abstract class PathParameterParserImpl implements PathParameterParser {
     if (this.templatePathHasParameter(paramName)) {
       return this.parseParameter(parsedPath, paramName, parameterValue);
     } else {
-      throw new PathParamNotFoundError(paramName, this.templatePath);
+      throw new PathParamNotFoundError(paramName, this.endpoint.templatePath);
     }
   }
 
@@ -43,7 +40,7 @@ export abstract class PathParameterParserImpl implements PathParameterParser {
   }
 
   private templatePathHasParameter(paramName: string): boolean {
-    return this.templatePath.includes(
+    return this.endpoint.templatePath.includes(
       this.getParameterTemplate(paramName)
     );
   }

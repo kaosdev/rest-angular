@@ -1,9 +1,10 @@
-import {EndpointMetadata} from '../utils/endpoint-metadata';
-import {MetadataTarget} from '../utils/metadata-target';
-import {RestAngularClient, RestEndpoint} from '../rest-angular-client';
+import {EndpointMetadata} from '../../metadata/endpoint-metadata';
+import {MetadataTarget} from '../../metadata/metadata-target';
+import {RestAngularApi} from '../../rest-angular-api';
+import {RestEndpoint} from '../../types/rest-endpoint';
 
 export type RestParameterDecorator = (
-  target: RestAngularClient,
+  target: RestAngularApi,
   propertyKey: string,
   index: number
 ) => void;

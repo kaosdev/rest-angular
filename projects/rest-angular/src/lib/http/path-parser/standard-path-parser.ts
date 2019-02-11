@@ -1,6 +1,6 @@
-import {PathParameterParserImpl} from './path-parser';
+import {PathParameterParser} from './path-parser';
 
-export class StandardPathParameterParser extends PathParameterParserImpl {
+export class StandardPathParameterParser extends PathParameterParser {
   protected getParameterTemplate(paramName: string): string {
     return `:${paramName}`;
   }

@@ -1,5 +1,5 @@
 import {MetadataTarget} from './metadata-target';
-import {RestEndpoint} from '../rest-angular-client';
+import {RestEndpoint} from '../types/rest-endpoint';
 
 const ENDPOINT_MAP_META = 'endpoint-map';
 

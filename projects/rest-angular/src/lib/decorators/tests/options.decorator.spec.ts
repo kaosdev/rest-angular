@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {BaseUrl, Body, GET, OPTIONS, Path} from '..';
 
 describe('@OPTIONS Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestOptionsDecoratorService extends RestAngularClient {
+  class TestOptionsDecoratorService extends RestAngularApi {
 
     @OPTIONS(':id')
     public testExample(@Path('id') id: number): Observable<any> {
@@ -39,7 +39,7 @@ describe('@OPTIONS Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @OPTIONS('path1')
         @OPTIONS('path2')
@@ -54,7 +54,7 @@ describe('@OPTIONS Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @OPTIONS('path1')
         @GET('path2')
@@ -67,7 +67,7 @@ describe('@OPTIONS Decorator - Errors', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestOptionsWithBodyDecoratorService extends RestAngularClient {
+  class TestOptionsWithBodyDecoratorService extends RestAngularApi {
 
     @OPTIONS('path1')
     public optionsWithBody(@Body body: any): Observable<any> {

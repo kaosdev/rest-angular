@@ -4,7 +4,7 @@ describe('@BaseUrl', () => {
   @Headers({
     Authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
   })
-  class TestHeadersDecoratorService extends RestAngularClient {
+  class TestHeadersDecoratorService extends RestAngularApi {
 
     @GET('resource/:id')
     getResource(@Path('id') id: number): Observable<any> {
@@ -14,7 +14,7 @@ describe('@BaseUrl', () => {
 
   const providers = getDecoratorProviders(TestHeadersDecoratorService);
 
-  it('should set base Url of a RestAngularClient', () => {
+  it('should set base Url of a RestAngularApi', () => {
     const mockResponse = 'response';
 
     providers.testDecoratorService.getResource(42).subscribe();

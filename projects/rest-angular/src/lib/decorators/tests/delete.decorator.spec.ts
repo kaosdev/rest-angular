@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, Body, DELETE, Path, POST} from '..';
@@ -7,7 +7,7 @@ import {BaseUrl, Body, DELETE, Path, POST} from '..';
 describe('@DELETE Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetDecoratorService extends RestAngularClient {
+  class TestGetDecoratorService extends RestAngularApi {
 
     @DELETE('examples/:uuid')
     public deleteExamples(@Path('uuid') uuid: string): Observable<any> {
@@ -58,7 +58,7 @@ describe('@DELETE Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestGetDecoratorService extends RestAngularApi {
 
         @DELETE('path1')
         @DELETE('path2')
@@ -73,7 +73,7 @@ describe('@DELETE Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestGetDecoratorService extends RestAngularApi {
 
         @DELETE('path1')
         @POST('path2')
@@ -86,7 +86,7 @@ describe('@DELETE Decorator - Errors', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestDeleteWithBodyDecoratorService extends RestAngularClient {
+  class TestDeleteWithBodyDecoratorService extends RestAngularApi {
 
     @DELETE('path1')
     public deleteWithBody(@Body body: any): Observable<any> {

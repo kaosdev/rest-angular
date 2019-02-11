@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {BaseUrl, PATCH, POST} from '..';
 
 describe('@POST Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestPostDecoratorService extends RestAngularClient {
+  class TestPostDecoratorService extends RestAngularApi {
 
     @POST('examples')
     public createExample(): Observable<any> {
@@ -40,7 +40,7 @@ describe('@POST Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @POST('path1')
         @POST('path2')
@@ -55,7 +55,7 @@ describe('@POST Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @POST('path1')
         @PATCH('path2')

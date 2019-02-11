@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, Body, GET, PUT} from '..';
@@ -7,7 +7,7 @@ import {BaseUrl, Body, GET, PUT} from '..';
 describe('@PUT Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestPutDecoratorService extends RestAngularClient {
+  class TestPutDecoratorService extends RestAngularApi {
 
     @PUT('examples')
     public updateExamples(@Body body: any): Observable<any> {
@@ -59,7 +59,7 @@ describe('@PUT Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @PUT('path1')
         @PUT('path2')
@@ -74,7 +74,7 @@ describe('@PUT Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
+      class TestDecoratorService extends RestAngularApi {
 
         @PUT('path1')
         @GET('path2')

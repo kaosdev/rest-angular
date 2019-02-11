@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, Body, GET, POST} from '..';
 
@@ -9,7 +9,7 @@ import {BaseUrl, Body, GET, POST} from '..';
 describe('@GET Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetDecoratorService extends RestAngularClient {
+  class TestGetDecoratorService extends RestAngularApi {
 
     @GET('examples')
     public getExamples(): Observable<any> {
@@ -60,7 +60,7 @@ describe('@GET Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestGetDecoratorService extends RestAngularApi {
 
         @GET('path1')
         @GET('path2')
@@ -75,7 +75,7 @@ describe('@GET Decorator - Errors', () => {
     expect(() => {
       @Injectable()
       @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
+      class TestGetDecoratorService extends RestAngularApi {
 
         @GET('path1')
         @POST('path2')
@@ -88,7 +88,7 @@ describe('@GET Decorator - Errors', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetWithBodyDecoratorService extends RestAngularClient {
+  class TestGetWithBodyDecoratorService extends RestAngularApi {
 
     @GET('path1')
     public getWithBody(@Body body: any): Observable<any> {
