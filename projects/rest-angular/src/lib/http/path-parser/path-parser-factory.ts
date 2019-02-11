@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 
 export abstract class PathParserFactory {
   abstract makeParser(
+    baseUrl: string,
     templatePath: string,
     parametersNames: string[]
   ): PathParameterParser;
@@ -12,14 +13,14 @@ export abstract class PathParserFactory {
 
 @Injectable()
 export class StandardPathParserFactory implements PathParserFactory {
-  makeParser(templatePath: string, parametersNames: string[]): PathParameterParser {
-    return new StandardPathParameterParser(templatePath, parametersNames);
+  makeParser(baseUrl: string, templatePath: string, parametersNames: string[]): PathParameterParser {
+    return new StandardPathParameterParser(baseUrl, templatePath, parametersNames);
   }
 }
 
 @Injectable()
 export class CurlyPathParserFactory implements PathParserFactory {
-  makeParser(templatePath: string, parametersNames: string[]): PathParameterParser {
-    return new CurlyPathParameterParser(templatePath, parametersNames);
+  makeParser(baseUrl: string, templatePath: string, parametersNames: string[]): PathParameterParser {
+    return new CurlyPathParameterParser(baseUrl, templatePath, parametersNames);
   }
 }

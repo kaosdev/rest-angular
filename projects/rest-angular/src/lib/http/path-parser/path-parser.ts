@@ -7,22 +7,27 @@ export interface PathParameterParser {
 export abstract class PathParameterParserImpl implements PathParameterParser {
 
   constructor(
+    protected baseUrl: string,
     protected templatePath: string,
     protected parametersNames: string[]
-  ) {}
+  ) {
+  }
 
   public parse(parameterValues: any[]): string {
-    if (!this.parametersNames) {
-      return this.templatePath;
-    }
-
+    let url = this.baseUrl;
     let parsedPath = this.templatePath;
 
-    this.parametersNames.forEach((paramName, i) => {
-      parsedPath = this.parseParameterOrThrowError(parsedPath, paramName, parameterValues[i]);
-    });
+    if (this.parametersNames) {
+      this.parametersNames.forEach((paramName, i) => {
+        parsedPath = this.parseParameterOrThrowError(parsedPath, paramName, parameterValues[i]);
+      });
+    }
 
-    return parsedPath;
+    if (parsedPath) {
+      url += `/${parsedPath}`;
+    }
+
+    return url;
   }
 
   private parseParameterOrThrowError(parsedPath: string, paramName: string, parameterValue: string): string {

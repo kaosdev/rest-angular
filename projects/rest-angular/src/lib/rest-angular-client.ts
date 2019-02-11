@@ -95,12 +95,12 @@ export abstract class RestAngularClient {
       const pathParser = this.getPathParamParser(endpoint.templatePath, methodKey);
       const bodyParser = this.getBodyParser(methodKey);
       const queryParser = this.getQueryParser(methodKey);
-      this.callHandlerMap[methodKey] = new RestCallHandler(this.baseUrl, pathParser, bodyParser, queryParser);
+      this.callHandlerMap[methodKey] = new RestCallHandler(pathParser, bodyParser, queryParser);
     });
   }
 
   private getPathParamParser(path: string, methodKey: string): PathParameterParser {
-    return this.pathParamParserFactory.makeParser(path, this.getPathParams(methodKey));
+    return this.pathParamParserFactory.makeParser(this.baseUrl, path, this.getPathParams(methodKey));
   }
 
   private getBodyParser(methodKey: string): BodyParser {

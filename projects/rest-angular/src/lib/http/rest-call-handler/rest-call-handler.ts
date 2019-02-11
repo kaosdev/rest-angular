@@ -5,7 +5,6 @@ import {QueryParser} from '../query-parser/query-parser';
 
 export class RestCallHandler {
   constructor(
-    private readonly baseUrl: string,
     private readonly pathParser: PathParameterParser,
     private readonly bodyParser: BodyParser,
     private readonly queryParser: QueryParser) {
@@ -15,20 +14,12 @@ export class RestCallHandler {
     return {
       url: this.getUrl(args),
       body: this.getBody(args),
-      queryParams: this.getQueryParams(args)
+      queryParams: this.getQueryParams(args),
     };
   }
 
   private getUrl(args: any[]): string {
-    let url = this.baseUrl;
-
-    const parsedPath = this.pathParser.parse(args);
-
-    if (parsedPath) {
-      url += `/${parsedPath}`;
-    }
-
-    return url;
+    return this.pathParser.parse(args);
   }
 
   private getBody(args): any {
@@ -42,6 +33,6 @@ export class RestCallHandler {
 
 export interface RestRequest {
   url: string;
-  queryParams: HttpParams;
   body: string;
+  queryParams: HttpParams;
 }
