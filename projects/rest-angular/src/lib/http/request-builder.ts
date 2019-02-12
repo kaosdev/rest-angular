@@ -1,7 +1,7 @@
-import {RestEndpoint} from './types/rest-endpoint';
-import {ParameterParser} from './types/parameter-parser';
+import {RestEndpoint} from '../types/rest-endpoint';
+import {ParameterParser} from '../types/parameter-parser';
 import {HttpRequest} from '@angular/common/http';
-import {RestRequest} from './types/rest-request';
+import {RestRequest} from '../types/rest-request';
 
 export class RequestBuilder {
   constructor(
@@ -14,7 +14,7 @@ export class RequestBuilder {
     const partialRequest = this.getPartialRequest(parameterValues);
 
     return new HttpRequest(this.endpoint.methodName, partialRequest.url, partialRequest.body, {
-      params: partialRequest.queryParams,
+      params: partialRequest.query,
     });
   }
 

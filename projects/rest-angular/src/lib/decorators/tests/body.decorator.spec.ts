@@ -6,6 +6,7 @@ import {Body} from '../parameter.decorators';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BodyParserFactory} from '../../http/body-parser/body-parser-factory';
 import {BaseUrl, POST} from '..';
+import {RestRequest} from '../../types/rest-request';
 
 
 describe('Body Decorator', () => {
@@ -78,7 +79,7 @@ describe('@Body Decorator - Parser Injection', () => {
   class CustomBodyParserFactory implements BodyParserFactory {
     makeParser(endpoint) {
       return {
-        REQUEST_FIELD: 'body',
+        REQUEST_FIELD: 'body' as keyof RestRequest,
         parse(args: any[]): any {
           return { body1: args[endpoint.bodyParamIndex], body2: args[endpoint.bodyParamIndex + 1] };
         }

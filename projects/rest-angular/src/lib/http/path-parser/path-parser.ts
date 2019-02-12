@@ -1,9 +1,10 @@
 import {PathParamNotFoundError} from './path-parser-errors';
 import {ParameterParser} from '../../types/parameter-parser';
 import {RestEndpoint} from '../../types/rest-endpoint';
+import {RestRequest} from '../../types/rest-request';
 
 export abstract class PathParameterParser implements ParameterParser<any> {
-  REQUEST_FIELD = 'url';
+  REQUEST_FIELD: keyof RestRequest = 'url';
 
   constructor(
     protected endpoint: RestEndpoint,

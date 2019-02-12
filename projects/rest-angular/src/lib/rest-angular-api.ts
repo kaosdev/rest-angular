@@ -12,6 +12,7 @@ import {map, takeLast} from 'rxjs/operators';
 import {RestEndpoint} from './types/rest-endpoint';
 import {DefaultOptions} from './types/rest-default-options';
 import {Injection} from './types/injection';
+import {QueryParserFactory, StandardQueryParserFactory} from './http/query-parser/query-parser-factory';
 
 export const REST_BASE_URL = new InjectionToken<string>('Base url');
 export const BASE_URL_META = 'base-url';
@@ -24,9 +25,17 @@ const PARAMETERS_PARSER_FACTORIES: Injection<ParameterParserFactory<any>>[] = [
   {
     token: PathParserFactory,
     default: StandardPathParserFactory
+  },
+  {
+    token: QueryParserFactory,
+    default: StandardQueryParserFactory
   }
 ];
 
+/**
+ * Define an api where decorators can be used,
+ * it handle injection, and httpClient TODO: move httpClient handling?
+ */
 export abstract class RestAngularApi {
   client: RestAngularClient;
 
