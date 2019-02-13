@@ -1,9 +1,11 @@
 import {MetadataTarget} from './metadata-target';
-import {BASE_URL_META, HEADERS_META} from '../rest-angular-api';
 import {DefaultOptions} from '../types/rest-default-options';
 
 // TODO: make a unic metadata for all defaults?
 const DEFAULT_OPTIONS_META = 'default-options';
+
+export const BASE_URL_META = 'base-url';
+export const HEADERS_META = 'headers';
 
 export class DefaultMetadata {
   constructor(

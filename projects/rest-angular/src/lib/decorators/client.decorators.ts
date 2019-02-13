@@ -1,4 +1,4 @@
-import {BASE_URL_META, HEADERS_META} from '../rest-angular-api';
+import {BASE_URL_META, HEADERS_META} from '../metadata/default-metadata';
 import {MultipleDecoratorsError} from '../errors/multiple-decorators-error';
 import {ClientDecoratorFactory} from './factories/client-decorator-factory';
 import {RestHeaders} from '../types/headers';
