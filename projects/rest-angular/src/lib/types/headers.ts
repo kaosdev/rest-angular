@@ -1,4 +1,4 @@
 export interface RestHeaders {
-  Authorization: string;
-  [headerName: string]: string;
+  Authorization?: string | string[];
+  [headerName: string]: string | string[];
 }

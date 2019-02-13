@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {RestAngularApi} from '../../rest-angular-api';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, Body, DELETE, Path, POST} from '..';
+import {BaseUrl, DELETE, Path, POST} from '..';
 
 describe('@DELETE Decorator', () => {
   @Injectable()
@@ -83,22 +83,4 @@ describe('@DELETE Decorator - Errors', () => {
       }
     }).toThrowError(`Cannot mix decorators in the same method`);
   });
-
-  @Injectable()
-  @BaseUrl('base_url')
-  class TestDeleteWithBodyDecoratorService extends RestAngularApi {
-
-    @DELETE('path1')
-    public deleteWithBody(@Body body: any): Observable<any> {
-      return null;
-    }
-  }
-
-  const providers = getDecoratorProviders(TestDeleteWithBodyDecoratorService);
-
-  it('should throw error when using @Body and @DELETE', /*() => { TODO: delete with body?
-    expect(() => {
-      providers.testDecoratorService.deleteWithBody('body').subscribe();
-    }).toThrowError(`@Body decorator is not allowed on @DELETE`);
-  }*/);
 });

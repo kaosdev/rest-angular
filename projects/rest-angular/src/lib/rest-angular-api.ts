@@ -13,6 +13,7 @@ import {RestEndpoint} from './types/rest-endpoint';
 import {DefaultOptions} from './types/rest-default-options';
 import {Injection} from './types/injection';
 import {QueryParserFactory, StandardQueryParserFactory} from './http/query-parser/query-parser-factory';
+import {HeadersParserFactory, StandardHeadersParserFactory} from './http/header-parser/headers-parser-factory';
 
 export const REST_BASE_URL = new InjectionToken<string>('Base url');
 export const BASE_URL_META = 'base-url';
@@ -30,6 +31,10 @@ const PARAMETERS_PARSER_FACTORIES: Injection<ParameterParserFactory<any>>[] = [
   {
     token: QueryParserFactory,
     default: StandardQueryParserFactory
+  },
+  {
+    token: HeadersParserFactory,
+    default: StandardHeadersParserFactory
   }
 ];
 
@@ -49,15 +54,7 @@ export abstract class RestAngularApi {
     this.client = new RestAngularClient(
       this.getParameterParserFactories(),
       this.getEndpointsMetadata(),
-      this.getDefaultOptions()
-    );
-  }
-
-  public makeRequest<T>(methodKey: string, parameterValues: any[]): Observable<T> {
-    const httpRequest = this.client.buildRequest(methodKey, parameterValues);
-    return this.httpClient.request<T>(httpRequest).pipe(
-      takeLast(1),
-      map((response: HttpResponse<T>) => response.body)
+      this.getMergedOptions()
     );
   }
 
@@ -77,9 +74,34 @@ export abstract class RestAngularApi {
     ).getAll();
   }
 
+  private getMergedOptions(): DefaultOptions {
+    return {
+      ...this.getInjectedOptions(),
+      ...this.getDefaultOptions(),
+    };
+  }
+
   private getDefaultOptions(): DefaultOptions {
     return new DefaultMetadata(
       new MetadataTarget(this)
     ).get();
+  }
+
+  private getInjectedOptions(): DefaultOptions {
+    const baseUrl = this.injector.get(REST_BASE_URL, null);
+
+    return {
+      ...(baseUrl ? {
+        baseUrl
+      } : {})
+    } as DefaultOptions;
+  }
+
+  public makeRequest<T>(methodKey: string, parameterValues: any[]): Observable<T> {
+    const httpRequest = this.client.buildRequest(methodKey, parameterValues);
+    return this.httpClient.request<T>(httpRequest).pipe(
+      takeLast(1),
+      map((response: HttpResponse<T>) => response.body)
+    );
   }
 }

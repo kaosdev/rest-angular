@@ -12,9 +12,16 @@ export class DefaultMetadata {
   }
 
   get(): DefaultOptions {
+    const baseUrl = this.target.getMetadata(BASE_URL_META);
+    const headers = this.target.getMetadata(HEADERS_META);
+
     return {
-      baseUrl: this.target.getMetadata(BASE_URL_META),
-      headers: this.target.getMetadata(HEADERS_META)
-    };
+      ...(baseUrl ? {
+        baseUrl
+      } : {}),
+      ...(headers ? {
+        headers
+      } : {})
+    } as DefaultOptions;
   }
 }

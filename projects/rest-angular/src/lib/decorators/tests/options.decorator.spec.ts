@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
 import {RestAngularApi} from '../../rest-angular-api';
-import {BaseUrl, Body, GET, OPTIONS, Path} from '..';
+import {BaseUrl, GET, OPTIONS, Path} from '..';
 
 describe('@OPTIONS Decorator', () => {
   @Injectable()
@@ -64,22 +64,4 @@ describe('@OPTIONS Decorator - Errors', () => {
       }
     }).toThrowError(`Cannot mix decorators in the same method`);
   });
-
-  @Injectable()
-  @BaseUrl('base_url')
-  class TestOptionsWithBodyDecoratorService extends RestAngularApi {
-
-    @OPTIONS('path1')
-    public optionsWithBody(@Body body: any): Observable<any> {
-      return null;
-    }
-  }
-
-  const providers = getDecoratorProviders(TestOptionsWithBodyDecoratorService);
-
-  it('should throw error when using @Body and @OPTIONS', /*() => { TODO: options with body
-    expect(() => {
-      providers.testDecoratorService.optionsWithBody('body').subscribe();
-    }).toThrowError(`@Body decorator is not allowed on @OPTIONS`);
-  }*/);
 });

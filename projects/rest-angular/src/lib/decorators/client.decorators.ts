@@ -1,4 +1,4 @@
-import {BASE_URL_META} from '../rest-angular-api';
+import {BASE_URL_META, HEADERS_META} from '../rest-angular-api';
 import {MultipleDecoratorsError} from '../errors/multiple-decorators-error';
 import {ClientDecoratorFactory} from './factories/client-decorator-factory';
 import {RestHeaders} from '../types/headers';
@@ -29,7 +29,7 @@ export function BaseUrl(baseUrl: string) {
 }
 
 export function DefaultHeaders(headers: RestHeaders) {
-  const decorator = DECORATOR_FACTORY.makeDecorator<RestHeaders>('hello', function (metadataValue) {
+  const decorator = DECORATOR_FACTORY.makeDecorator<RestHeaders>(HEADERS_META, function (metadataValue) {
     return {...metadataValue, ...headers};
   });
 

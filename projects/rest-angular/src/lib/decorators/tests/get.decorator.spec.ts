@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 import {RestAngularApi} from '../../rest-angular-api';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, Body, GET, POST} from '..';
+import {BaseUrl, GET, POST} from '..';
 
 
 describe('@GET Decorator', () => {
@@ -85,22 +85,4 @@ describe('@GET Decorator - Errors', () => {
       }
     }).toThrowError(`Cannot mix decorators in the same method`);
   });
-
-  @Injectable()
-  @BaseUrl('base_url')
-  class TestGetWithBodyDecoratorService extends RestAngularApi {
-
-    @GET('path1')
-    public getWithBody(@Body body: any): Observable<any> {
-      return null;
-    }
-  }
-
-  const providers = getDecoratorProviders(TestGetWithBodyDecoratorService);
-
-  it('should throw error when using @Body and @GET', /*() => { TODO: get with body?
-    expect(() => {
-      providers.testDecoratorService.getWithBody('body').subscribe();
-    }).toThrowError(`@Body decorator is not allowed on @GET`);
-  }*/);
 });
