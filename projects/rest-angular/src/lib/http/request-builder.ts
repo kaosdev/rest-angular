@@ -15,6 +15,7 @@ export class RequestBuilder {
 
     return new HttpRequest(this.endpoint.methodName, partialRequest.url, partialRequest.body, {
       params: partialRequest.query,
+      headers: partialRequest.headers
     });
   }
 

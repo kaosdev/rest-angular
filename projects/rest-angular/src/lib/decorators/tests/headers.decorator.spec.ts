@@ -1,7 +1,15 @@
-describe('@BaseUrl', () => {
-  /*@Injectable()
+import {Injectable} from '@angular/core';
+import {BaseUrl, DefaultHeaders} from '../client.decorators';
+import {RestAngularApi} from '../../rest-angular-api';
+import {GET} from '../method.decorators';
+import {Path} from '../parameter.decorators';
+import {Observable} from 'rxjs';
+import {getDecoratorProviders} from './decorators-utils.spec';
+
+describe('@DefaultHeaders', () => {
+  @Injectable()
   @BaseUrl('base_url')
-  @Headers({
+  @DefaultHeaders({
     Authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
   })
   class TestHeadersDecoratorService extends RestAngularApi {
@@ -22,5 +30,5 @@ describe('@BaseUrl', () => {
     const mockRequest = providers.restMock.expectRequest('base_url/resource/42');
     expect(mockRequest.request.headers.get('Authorization')).toBe('Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==');
     mockRequest.flush(mockResponse);
-  });*/
+  });
 });

@@ -1,6 +1,4 @@
-export type RestHeaders = RestHeader[];
-
-export interface RestHeader {
+export interface RestHeaders {
   Authorization: string;
   [headerName: string]: string;
 }

@@ -1,6 +1,7 @@
 import {BASE_URL_META} from '../rest-angular-api';
 import {MultipleDecoratorsError} from '../errors/multiple-decorators-error';
 import {ClientDecoratorFactory} from './factories/client-decorator-factory';
+import {RestHeaders} from '../types/headers';
 
 /**
  * Use this syntax:
@@ -27,12 +28,10 @@ export function BaseUrl(baseUrl: string) {
   return decorator;
 }
 
-/*
-export function Headers(headers: object) {
-  const decorator = DECORATOR_FACTORY.makeDecorator<[]>('hello', function (metadataValue) {
-    return [...metadataValue, ...headers];
+export function DefaultHeaders(headers: RestHeaders) {
+  const decorator = DECORATOR_FACTORY.makeDecorator<RestHeaders>('hello', function (metadataValue) {
+    return {...metadataValue, ...headers};
   });
 
   return decorator;
 }
-*/

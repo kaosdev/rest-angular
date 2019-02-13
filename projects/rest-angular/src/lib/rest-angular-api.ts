@@ -16,6 +16,7 @@ import {QueryParserFactory, StandardQueryParserFactory} from './http/query-parse
 
 export const REST_BASE_URL = new InjectionToken<string>('Base url');
 export const BASE_URL_META = 'base-url';
+export const HEADERS_META = 'headers';
 
 const PARAMETERS_PARSER_FACTORIES: Injection<ParameterParserFactory<any>>[] = [
   {

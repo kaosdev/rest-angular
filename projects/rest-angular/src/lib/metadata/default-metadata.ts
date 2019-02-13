@@ -1,5 +1,5 @@
 import {MetadataTarget} from './metadata-target';
-import {BASE_URL_META} from '../rest-angular-api';
+import {BASE_URL_META, HEADERS_META} from '../rest-angular-api';
 import {DefaultOptions} from '../types/rest-default-options';
 
 // TODO: make a unic metadata for all defaults?
@@ -13,7 +13,8 @@ export class DefaultMetadata {
 
   get(): DefaultOptions {
     return {
-      baseUrl: this.target.getMetadata(BASE_URL_META)
+      baseUrl: this.target.getMetadata(BASE_URL_META),
+      headers: this.target.getMetadata(HEADERS_META)
     };
   }
 }
