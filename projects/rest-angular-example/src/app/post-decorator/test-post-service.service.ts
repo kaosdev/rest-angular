@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Body, POST, RestAngularClient} from 'rest-angular-decorators';
+import {Body, POST, RestAngularApi} from 'rest-angular-decorators';
 import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TestPostServiceService extends RestAngularClient {
+export class TestPostServiceService extends RestAngularApi {
 
   @POST('posts')
   public createPost(@Body postObj: Post): Observable<Post> {

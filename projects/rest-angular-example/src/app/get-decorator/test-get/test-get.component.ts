@@ -19,7 +19,7 @@ export class TestGetComponent implements OnInit {
   }
 
   getTodo(id: number) {
-    this.testGetService.getTodos('Product 0+').subscribe(todo => this.todo = todo);
+    this.testGetService.getTodos().subscribe(todo => this.todo = todo);
   }
 
 }
