@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {RestAngularApi} from '../../rest-angular-api';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, DELETE, Path, POST} from '..';
+import {BaseUrl, DELETE, Path} from '..';
 
 describe('@DELETE Decorator', () => {
   @Injectable()
@@ -50,37 +50,5 @@ describe('@DELETE Decorator', () => {
     const mockRequest = providers.httpMock.expectOne('base_url');
     expect(mockRequest.request.method).toBe('DELETE');
     mockRequest.flush(mockResponse);
-  });
-});
-
-describe('@DELETE Decorator - Errors', () => {
-  it('should throw error when using multiple DELETE decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularApi {
-
-        @DELETE('path1')
-        @DELETE('path2')
-        public deleteMultiPath(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@DELETE()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularApi {
-
-        @DELETE('path1')
-        @POST('path2')
-        public deleteOrPost(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
   });
 });

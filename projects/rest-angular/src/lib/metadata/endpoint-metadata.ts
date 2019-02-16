@@ -21,11 +21,7 @@ export class EndpointMetadata {
 
   get(methodKey: string): RestEndpoint {
     const endpointMap = this.getAll();
-    if (endpointMap[methodKey]) {
-      return endpointMap[methodKey];
-    } else {
-      return {} as RestEndpoint;
-    }
+    return endpointMap[methodKey] || {} as RestEndpoint;
   }
 
   update(methodKey: string, mapFn: (endpoint: RestEndpoint) => RestEndpoint): void {

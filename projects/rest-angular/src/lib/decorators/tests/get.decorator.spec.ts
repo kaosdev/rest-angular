@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 import {RestAngularApi} from '../../rest-angular-api';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, GET, POST} from '..';
+import {BaseUrl, GET} from '..';
 
 
 describe('@GET Decorator', () => {
@@ -52,37 +52,5 @@ describe('@GET Decorator', () => {
     const mockRequest = providers.httpMock.expectOne('base_url');
     expect(mockRequest.request.method).toBe('GET');
     mockRequest.flush(mockResponse);
-  });
-});
-
-describe('@GET Decorator - Errors', () => {
-  it('should throw error when using multiple GET decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularApi {
-
-        @GET('path1')
-        @GET('path2')
-        public getMultiPath(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@GET()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularApi {
-
-        @GET('path1')
-        @POST('path2')
-        public getOrPost(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
   });
 });

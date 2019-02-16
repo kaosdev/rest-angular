@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
 import {RestAngularApi} from '../../rest-angular-api';
-import {BaseUrl, GET, OPTIONS, Path} from '..';
+import {BaseUrl, OPTIONS, Path} from '..';
 
 describe('@OPTIONS Decorator', () => {
   @Injectable()
@@ -31,37 +31,5 @@ describe('@OPTIONS Decorator', () => {
     const mockRequest = providers.httpMock.expectOne('base_url/21');
     expect(mockRequest.request.method).toBe('OPTIONS');
     mockRequest.flush(mockResponse);
-  });
-});
-
-describe('@OPTIONS Decorator - Errors', () => {
-  it('should throw error when using multiple OPTIONS decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularApi {
-
-        @OPTIONS('path1')
-        @OPTIONS('path2')
-        public options(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@OPTIONS()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularApi {
-
-        @OPTIONS('path1')
-        @GET('path2')
-        public options(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
   });
 });
