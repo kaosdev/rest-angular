@@ -1,22 +1,27 @@
 # Rest Angular Decorators
-An Angular Http Client for fast Rest APIs.
+> Build fast REST APIs using decorators
 
-## Installation
+## Getting Started
+
+### Installing
 
 ```
 npm install rest-angular-decorators
 ```
 
-## Basic Usage
+### Basic Usage
 
 Create a new service that extends RestAngularClient.
 Declare methods, parameters and base url.
 
-```ts
+```typescript
 @Injectable({
   providedIn: 'root'
 })
 @BaseUrl('https://jsonplaceholder.typicode.com')
+@DefaultHeaders({
+  Accept: 'text/html'
+})
 export class TestService extends RestAngularClient {
 
   // Path parameters
@@ -42,7 +47,7 @@ export class TestService extends RestAngularClient {
 
 Then in component just use the service
 
-```ts
+```typescript
 @Component({
   template: `<h1>{{ todoTitle$ | async }}</h1>`
 })
@@ -65,6 +70,7 @@ class TestComponent {
 - Path parameters: @Path
 - Query parameters: @Query, @QueryMap
 - Base url: @BaseUrl or by Injection of REST_BASE_URL
+- Headers: @DefaultHeaders
 
 ## Customization
 
@@ -72,7 +78,7 @@ What if you don't like to write url like these `GET('path/:id')`?
 What if you like curly braces a lot?
 
 Just add this provider in AppModule and you can use paths with style `GET('path/{id}')`
-```ts
+```typescript
 {provide: PathParserFactory, useClass: CurlyPathParserFactory}
 ```
 
@@ -80,6 +86,11 @@ You can also provide your own factories for:
 - PathParserFactory 
 - BodyParserFactory
 - QueryParserFactory
+
+## Roadmap
+
+- @Headers method decorator
+- @Header & @HeaderMap parameter decorator
 
 ## Contribute
 
