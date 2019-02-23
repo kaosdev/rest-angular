@@ -29,8 +29,12 @@ export class RestAngularClient {
 
   private mergeEndpointWithDefaults(endpoint: RestEndpoint): RestEndpoint {
     return {
+      ...this.defaultOptions,
       ...endpoint,
-      ...this.defaultOptions
+      headers: {
+        ...this.defaultOptions.headers,
+        ...endpoint.headers,
+      }
     };
   }
 

@@ -97,6 +97,7 @@ export abstract class RestAngularApi {
 
   public makeRequest<T>(methodKey: string, parameterValues: any[]): Observable<T> {
     const httpRequest = this.client.buildRequest(methodKey, parameterValues);
+
     return this.httpClient.request<T>(httpRequest).pipe(
       takeLast(1),
       map((response: HttpResponse<T>) => response.body)
