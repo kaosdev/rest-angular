@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, Body, GET, POST} from '..';
+import {BaseUrl, GET} from '..';
 
 
 describe('@GET Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetDecoratorService extends RestAngularClient {
+  class TestGetDecoratorService extends RestAngularApi {
 
     @GET('examples')
     public getExamples(): Observable<any> {
@@ -52,55 +52,5 @@ describe('@GET Decorator', () => {
     const mockRequest = providers.httpMock.expectOne('base_url');
     expect(mockRequest.request.method).toBe('GET');
     mockRequest.flush(mockResponse);
-  });
-});
-
-describe('@GET Decorator - Errors', () => {
-  it('should throw error when using multiple GET decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
-
-        @GET('path1')
-        @GET('path2')
-        public getMultiPath(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@GET()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
-
-        @GET('path1')
-        @POST('path2')
-        public getOrPost(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
-  });
-
-  @Injectable()
-  @BaseUrl('base_url')
-  class TestGetWithBodyDecoratorService extends RestAngularClient {
-
-    @GET('path1')
-    public getWithBody(@Body body: any): Observable<any> {
-      return null;
-    }
-  }
-
-  const providers = getDecoratorProviders(TestGetWithBodyDecoratorService);
-
-  it('should throw error when using @Body and @GET', () => {
-    expect(() => {
-      providers.testDecoratorService.getWithBody('body').subscribe();
-    }).toThrowError(`@Body decorator is not allowed on @GET`);
   });
 });

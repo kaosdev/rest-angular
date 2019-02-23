@@ -1,4 +1,4 @@
-import {ParameterDecoratorFactory, RestParameterDecorator} from '../factories/parameter-decorator-factory';
+import {ParameterDecoratorFactory, RestParameterDecorator} from './factories/parameter-decorator-factory';
 import {MultipleDecoratorsError} from '../errors/multiple-decorators-error';
 
 const PARAMETER_DECORATOR_FACTORY = new ParameterDecoratorFactory();

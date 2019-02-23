@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
-import {RestAngularClient} from '../../rest-angular-client';
-import {BaseUrl, PATCH, POST} from '..';
+import {RestAngularApi} from '../../rest-angular-api';
+import {BaseUrl, POST} from '..';
 
 describe('@POST Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestPostDecoratorService extends RestAngularClient {
+  class TestPostDecoratorService extends RestAngularApi {
 
     @POST('examples')
     public createExample(): Observable<any> {
@@ -34,36 +34,3 @@ describe('@POST Decorator', () => {
     mockRequest.flush(mockResponse);
   });
 });
-
-describe('@POST Decorator - Errors', () => {
-  it('should throw error when using multiple POST decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
-
-        @POST('path1')
-        @POST('path2')
-        public updateMultiPath(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@POST()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestDecoratorService extends RestAngularClient {
-
-        @POST('path1')
-        @PATCH('path2')
-        public updateOrGet(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
-  });
-});
-

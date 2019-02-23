@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, GET, Path} from '..';
 import {Query} from '../parameter.decorators';
@@ -9,7 +9,7 @@ describe('@Query decorator', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestQueryDecoratorService extends RestAngularClient {
+  class TestQueryDecoratorService extends RestAngularApi {
 
     @GET('examples')
     public getExamples(@Query('limit') limit: number, @Query('search') search?: string): Observable<any> {

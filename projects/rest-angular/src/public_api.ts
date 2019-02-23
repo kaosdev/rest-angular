@@ -7,6 +7,6 @@ export {
   StandardPathParserFactory
 } from './lib/http/path-parser/path-parser-factory';
 export {
-  RestAngularClient,
+  RestAngularApi,
   REST_BASE_URL,
-} from './lib/rest-angular-client';
+} from './lib/rest-angular-api';

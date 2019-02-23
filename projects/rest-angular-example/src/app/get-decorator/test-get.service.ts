@@ -1,17 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {BaseUrl, GET, Path, Query, RestAngularClient} from 'rest-angular-decorators';
+import {DefaultHeaders, GET, Path, RestAngularApi} from 'rest-angular-decorators';
 
 @Injectable({
   providedIn: 'root'
 })
-@BaseUrl('localhost:3000')
-export class TestGetService extends RestAngularClient {
-
-  @GET('products')
-  getTodos(@Query('name') search: string): Observable<any[]> {
-    return null;
-  }
+@DefaultHeaders({
+  Accept: 'text/html'
+})
+export class TestGetService extends RestAngularApi {
 
   @GET('todos/{id}')
   getTodo(
@@ -20,10 +17,8 @@ export class TestGetService extends RestAngularClient {
     return null;
   }
 
-  @GET('todos/{id2}')
-  getTodo2(
-    @Path('id2') id: number
-  ): Observable<any> {
+  @GET('todos')
+  getTodos(): Observable<any> {
     return null;
   }
 }

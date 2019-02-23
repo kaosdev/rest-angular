@@ -1,82 +1,60 @@
-import {MethodDecoratorFactory, RestMethodDecorator} from '../factories/method-decorator-factory';
-import {NotAllowedDecoratorError} from '../errors/not-allowed-decorator-error';
+import {MethodDecoratorFactory, RestMethodDecorator, RestMethodDecoratorFactory} from './factories/method-decorator-factory';
+import {RestHeaders} from '../types/headers';
 
 const METHOD_DECORATOR_FACTORY = new MethodDecoratorFactory();
+const REST_METHOD_DECORATOR_FACTORY = new RestMethodDecoratorFactory();
 
 export function PUT(path: string): RestMethodDecorator {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('PUT', path, (http, request) => {
-    return http.put(
-      request.url,
-      request.body,
-      {
-        params: request.queryParams
-      }
-    );
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'PUT';
+    return endpointMap;
   });
 }
 
 export function POST(path: string): RestMethodDecorator {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('POST', path, (http, request) => {
-    return http.post(
-      request.url,
-      request.body,
-      {
-        params: request.queryParams
-      }
-    );
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'POST';
+    return endpointMap;
   });
 }
 
 export function PATCH(path: string): RestMethodDecorator {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('PATCH', path, (http, request) => {
-    return http.patch(
-      request.url,
-      request.body,
-      {
-        params: request.queryParams
-      }
-    );
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'PATCH';
+    return endpointMap;
   });
 }
 
 export function OPTIONS(path: string): RestMethodDecorator {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('OPTIONS', path, (http, request) => {
-    if (request.body) {
-      throw new NotAllowedDecoratorError('Body', 'OPTIONS');
-    }
-
-    return http.options(
-      request.url,
-      {
-        params: request.queryParams
-      }
-    );
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'OPTIONS';
+    return endpointMap;
   });
 }
 
 export function GET(path: string) {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('GET', path, (http, request) => {
-    if (request.body) {
-      throw new NotAllowedDecoratorError('Body', 'GET');
-    }
-
-    return http.get(request.url, {
-      params: request.queryParams
-    });
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'GET';
+    return endpointMap;
   });
 }
 
 export function DELETE(path: string): RestMethodDecorator {
-  return METHOD_DECORATOR_FACTORY.makeDecorator('DELETE', path, (http, request) => {
-    if (request.body) {
-      throw new NotAllowedDecoratorError('Body', 'DELETE');
-    }
+  return REST_METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.templatePath = path;
+    endpointMap.methodName = 'DELETE';
+    return endpointMap;
+  });
+}
 
-    return http.delete(
-      request.url,
-      {
-        params: request.queryParams
-      }
-    );
+export function EndpointHeaders(headers: RestHeaders) {
+  return METHOD_DECORATOR_FACTORY.makeDecorator<RestHeaders>(endpointMap => {
+    endpointMap.headers = headers;
+    return endpointMap;
   });
 }

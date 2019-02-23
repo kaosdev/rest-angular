@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {BodyParser, StandardBodyParser} from './body-parser';
+import {ParameterParserFactory} from '../../types/parameter-parser';
+import {RestEndpoint} from '../../types/rest-endpoint';
 
-export abstract class BodyParserFactory {
+export abstract class BodyParserFactory implements ParameterParserFactory<any> {
   abstract makeParser(
-    bodyParamIndex: number
+    endpoint: RestEndpoint
   ): BodyParser;
 }
 
 @Injectable()
 export class StandardBodyParserFactory implements BodyParserFactory {
-  makeParser(bodyParamIndex) {
-    return new StandardBodyParser(bodyParamIndex);
+  makeParser(endpoint) {
+    return new StandardBodyParser(endpoint);
   }
 }

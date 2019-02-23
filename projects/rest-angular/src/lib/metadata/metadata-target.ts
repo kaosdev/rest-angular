@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {HandleRestClientFunction} from '../factories/client-decorator-factory';
+import {HandleRestClientFunction} from '../decorators/factories/client-decorator-factory';
 
 export interface Metadata<T> {
   updateMetadata(metadataKey: string, mapFn: (metadataValue: T) => T);

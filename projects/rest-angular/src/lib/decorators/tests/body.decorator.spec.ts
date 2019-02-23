@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {Body} from '../parameter.decorators';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BodyParserFactory} from '../../http/body-parser/body-parser-factory';
 import {BaseUrl, POST} from '..';
+import {RestRequest} from '../../types/rest-request';
 
 
 describe('Body Decorator', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestBodyDecoratorService extends RestAngularClient {
+  class TestBodyDecoratorService extends RestAngularApi {
 
     @POST('examples')
     public createExample(@Body example: any): Observable<any> {
@@ -32,6 +33,7 @@ describe('Body Decorator', () => {
 
     providers.testDecoratorService.createExample('example').subscribe(
       res => {
+        console.log(res);
         expect(res).toBe(mockResponse);
       },
       err => fail(`expected a response, but got error: ${err}`)
@@ -61,7 +63,7 @@ describe('Body Decorator', () => {
 
   it('should throw error when using multiple body parameters', () => {
     expect(() => {
-      class TestBodyMultiError extends RestAngularClient {
+      class TestBodyMultiError extends RestAngularApi {
 
         @POST('examples/body/multi')
         public createExampleBodyMulti(@Body body: any, @Body body2: any): Observable<any> {
@@ -75,10 +77,11 @@ describe('Body Decorator', () => {
 describe('@Body Decorator - Parser Injection', () => {
   @Injectable()
   class CustomBodyParserFactory implements BodyParserFactory {
-    makeParser(bodyParamIndex) {
+    makeParser(endpoint) {
       return {
-        getBodyFromArgs(args: any[]): any {
-          return { body1: args[bodyParamIndex], body2: args[bodyParamIndex + 1] };
+        REQUEST_FIELD: 'body' as keyof RestRequest,
+        parse(args: any[]): any {
+          return { body1: args[endpoint.bodyParamIndex], body2: args[endpoint.bodyParamIndex + 1] };
         }
       };
     }
@@ -86,7 +89,7 @@ describe('@Body Decorator - Parser Injection', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestBodyDecoratorService extends RestAngularClient {
+  class TestBodyDecoratorService extends RestAngularApi {
 
     @POST('examples')
     public createExample(@Body body1: any, body2: any): Observable<any> {

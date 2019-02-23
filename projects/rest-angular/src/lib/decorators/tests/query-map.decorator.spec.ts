@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseUrl} from '../client.decorators';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {GET} from '../method.decorators';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
@@ -10,7 +10,7 @@ describe('@QueryMap decorator', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestQueryMapDecoratorService extends RestAngularClient {
+  class TestQueryMapDecoratorService extends RestAngularApi {
 
     @GET('examples')
     public getExamples(@QueryMap filters: object): Observable<any> {

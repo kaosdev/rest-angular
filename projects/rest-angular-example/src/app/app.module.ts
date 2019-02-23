@@ -23,7 +23,7 @@ import {CurlyPathParserFactory, PathParserFactory, REST_BASE_URL} from 'rest-ang
     ])
   ],
   providers: [
-    {provide: REST_BASE_URL, useValue: 'http://localhost:3000'},
+    {provide: REST_BASE_URL, useValue: 'https://jsonplaceholder.typicode.com'},
     {provide: PathParserFactory, useClass: CurlyPathParserFactory}
   ],
   bootstrap: [AppComponent]

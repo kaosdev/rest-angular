@@ -1,35 +1,38 @@
 import {PathParamNotFoundError} from './path-parser-errors';
+import {ParameterParser} from '../../types/parameter-parser';
+import {RestEndpoint} from '../../types/rest-endpoint';
+import {RestRequest} from '../../types/rest-request';
 
-export interface PathParameterParser {
-  parse(parameterValues: any[]): string;
-}
-
-export abstract class PathParameterParserImpl implements PathParameterParser {
+export abstract class PathParameterParser implements ParameterParser<any> {
+  REQUEST_FIELD: keyof RestRequest = 'url';
 
   constructor(
-    protected templatePath: string,
-    protected parametersNames: string[]
-  ) {}
+    protected endpoint: RestEndpoint,
+  ) {
+  }
 
   public parse(parameterValues: any[]): string {
-    if (!this.parametersNames) {
-      return this.templatePath;
+    let url = this.endpoint.baseUrl;
+    let parsedPath = this.endpoint.templatePath;
+
+    if (this.endpoint.pathParameterNames) {
+      this.endpoint.pathParameterNames.forEach((paramName, i) => {
+        parsedPath = this.parseParameterOrThrowError(parsedPath, paramName, parameterValues[i]);
+      });
     }
 
-    let parsedPath = this.templatePath;
+    if (parsedPath) {
+      url += `/${parsedPath}`;
+    }
 
-    this.parametersNames.forEach((paramName, i) => {
-      parsedPath = this.parseParameterOrThrowError(parsedPath, paramName, parameterValues[i]);
-    });
-
-    return parsedPath;
+    return url;
   }
 
   private parseParameterOrThrowError(parsedPath: string, paramName: string, parameterValue: string): string {
     if (this.templatePathHasParameter(paramName)) {
       return this.parseParameter(parsedPath, paramName, parameterValue);
     } else {
-      throw new PathParamNotFoundError(paramName, this.templatePath);
+      throw new PathParamNotFoundError(paramName, this.endpoint.templatePath);
     }
   }
 
@@ -38,7 +41,7 @@ export abstract class PathParameterParserImpl implements PathParameterParser {
   }
 
   private templatePathHasParameter(paramName: string): boolean {
-    return this.templatePath.includes(
+    return this.endpoint.templatePath.includes(
       this.getParameterTemplate(paramName)
     );
   }

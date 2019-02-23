@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
-import {BaseUrl, Body, DELETE, Path, POST} from '..';
+import {BaseUrl, DELETE, Path} from '..';
 
 describe('@DELETE Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestGetDecoratorService extends RestAngularClient {
+  class TestGetDecoratorService extends RestAngularApi {
 
     @DELETE('examples/:uuid')
     public deleteExamples(@Path('uuid') uuid: string): Observable<any> {
@@ -50,55 +50,5 @@ describe('@DELETE Decorator', () => {
     const mockRequest = providers.httpMock.expectOne('base_url');
     expect(mockRequest.request.method).toBe('DELETE');
     mockRequest.flush(mockResponse);
-  });
-});
-
-describe('@DELETE Decorator - Errors', () => {
-  it('should throw error when using multiple DELETE decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
-
-        @DELETE('path1')
-        @DELETE('path2')
-        public deleteMultiPath(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Only one '@DELETE()' decorator for each method is supported`);
-  });
-
-  it('should throw error when using mixed decorators', () => {
-    expect(() => {
-      @Injectable()
-      @BaseUrl('base_url')
-      class TestGetDecoratorService extends RestAngularClient {
-
-        @DELETE('path1')
-        @POST('path2')
-        public deleteOrPost(): Observable<any> {
-          return null;
-        }
-      }
-    }).toThrowError(`Cannot mix decorators in the same method`);
-  });
-
-  @Injectable()
-  @BaseUrl('base_url')
-  class TestDeleteWithBodyDecoratorService extends RestAngularClient {
-
-    @DELETE('path1')
-    public deleteWithBody(@Body body: any): Observable<any> {
-      return null;
-    }
-  }
-
-  const providers = getDecoratorProviders(TestDeleteWithBodyDecoratorService);
-
-  it('should throw error when using @Body and @DELETE', () => {
-    expect(() => {
-      providers.testDecoratorService.deleteWithBody('body').subscribe();
-    }).toThrowError(`@Body decorator is not allowed on @DELETE`);
   });
 });

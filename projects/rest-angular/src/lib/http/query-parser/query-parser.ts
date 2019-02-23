@@ -1,13 +1,18 @@
 import {HttpParams} from '@angular/common/http';
+import {ParameterParser} from '../../types/parameter-parser';
+import {RestEndpoint} from '../../types/rest-endpoint';
+import {RestRequest} from '../../types/rest-request';
 
-export interface QueryParser {
-  parse(args: any[]): HttpParams;
+export abstract class QueryParser implements ParameterParser<HttpParams> {
+  REQUEST_FIELD: keyof RestRequest = 'query';
+  abstract parse(args: any[]): HttpParams;
 }
 
-export class StandardQueryParser implements QueryParser {
+export class StandardQueryParser extends QueryParser {
   constructor(
-    private paramNames: string[]
+    private endpoint: RestEndpoint
   ) {
+    super();
   }
 
   parse(args: any[]): HttpParams {
@@ -19,8 +24,8 @@ export class StandardQueryParser implements QueryParser {
   private getParamsObject(args: any[]): { [key: string]: any } {
     let queryObject = {};
 
-    if (this.paramNames) {
-      this.paramNames.forEach((paramName, index) => {
+    if (this.endpoint.queryParameterNames) {
+      this.endpoint.queryParameterNames.forEach((paramName, index) => {
         const param = args[index];
 
         if (param) {

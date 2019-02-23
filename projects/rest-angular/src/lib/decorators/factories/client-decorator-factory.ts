@@ -1,9 +1,9 @@
-import {MetadataTarget} from '../utils/metadata-target';
-import {Constructor} from '../types/constructor';
-import {RestAngularClient} from '../rest-angular-client';
+import {MetadataTarget} from '../../metadata/metadata-target';
+import {Constructor} from '../../types/constructor';
+import {RestAngularApi} from '../../rest-angular-api';
 
 export type RestClientDecorator = (
-  ctor: Constructor<RestAngularClient>
+  ctor: Constructor<RestAngularApi>
 ) => void;
 export type HandleRestClientFunction<T> = (metadataValue: T) => T;
 

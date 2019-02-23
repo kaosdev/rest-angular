@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RestAngularClient} from '../../rest-angular-client';
+import {RestAngularApi} from '../../rest-angular-api';
 import {CurlyPathParserFactory, PathParserFactory} from '../../http/path-parser/path-parser-factory';
 import {getDecoratorProviders} from './decorators-utils.spec';
 import {BaseUrl, GET, Path} from '..';
@@ -9,7 +9,7 @@ describe('Path decorator parameters parsing', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestPathDecoratorService extends RestAngularClient {
+  class TestPathDecoratorService extends RestAngularApi {
 
     @GET('examples/:id/:param')
     public getExampleByIdAndParam(@Path('id') id: number, @Path('param') param: string): Observable<any> {
@@ -60,7 +60,7 @@ describe('Path decorator parameter not found', () => {
 
   @Injectable()
   @BaseUrl('base_url')
-  class TestPathDecoratorService extends RestAngularClient {
+  class TestPathDecoratorService extends RestAngularApi {
 
     @GET('examples/:id?param=:param')
     public getWithRightPathNames(@Path('param') param: string, @Path('id') id: number): Observable<any> {
@@ -103,7 +103,7 @@ describe('Path decorator parameter not found', () => {
 describe('Path decorator parser injection', () => {
   @Injectable()
   @BaseUrl('base_url')
-  class TestCurlyPathDecoratorService extends RestAngularClient {
+  class TestCurlyPathDecoratorService extends RestAngularApi {
 
     @GET('examples/{id}/{param}')
     public getExampleByIdAndParam(@Path('id') id: number, @Path('param') param: string): Observable<any> {
