@@ -7,5 +7,6 @@ export interface RestEndpoint {
   templatePath: string;
   pathParameterNames: string[];
   queryParameterNames: string[];
+  headerParameterNames: string[];
   bodyParamIndex: number;
 }

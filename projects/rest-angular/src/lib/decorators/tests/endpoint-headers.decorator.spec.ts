@@ -6,7 +6,7 @@ import {Path} from '../parameter.decorators';
 import {Observable} from 'rxjs';
 import {getDecoratorProviders} from './decorators-utils.spec';
 
-describe('@Headers Decorator', () => {
+describe('@EndpointHeaders Decorator', () => {
   @Injectable()
   @BaseUrl('base_url')
   class TestHeadersDecoratorService extends RestAngularApi {
