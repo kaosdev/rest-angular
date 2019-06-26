@@ -46,3 +46,15 @@ export const QueryMap: RestParameterDecorator = PARAMETER_DECORATOR_FACTORY.make
 
   return endpoint;
 });
+
+export function HeaderParam(name: string): RestParameterDecorator {
+  return PARAMETER_DECORATOR_FACTORY.makeDecorator((endpoint, index) => {
+    if (!endpoint.headerParameterNames) {
+      endpoint.headerParameterNames = [];
+    }
+
+    endpoint.headerParameterNames[index] = name;
+
+    return endpoint;
+  });
+}
