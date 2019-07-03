@@ -8,7 +8,7 @@ import {ParameterParserFactory} from './types/parameter-parser';
 import {RestAngularClient} from './rest-angular-client';
 import {PathParserFactory, StandardPathParserFactory} from './http/path-parser/path-parser-factory';
 import {DefaultMetadata} from './metadata/default-metadata';
-import {map, takeLast} from 'rxjs/operators';
+import {catchError, map, takeLast} from 'rxjs/operators';
 import {RestEndpoint} from './types/rest-endpoint';
 import {DefaultOptions} from './types/rest-default-options';
 import {Injection} from './types/injection';
@@ -97,10 +97,13 @@ export abstract class RestAngularApi {
 
   public makeRequest<T>(methodKey: string, parameterValues: any[]): Observable<T> {
     const httpRequest = this.client.buildRequest(methodKey, parameterValues);
+    const errorHandler = this['onError'];
 
-    return this.httpClient.request<T>(httpRequest).pipe(
+    const rxRequest = this.httpClient.request<T>(httpRequest).pipe(
       takeLast(1),
-      map((response: HttpResponse<T>) => response.body)
+      map((response: HttpResponse<T>) => response.body),
     );
+
+    return errorHandler ? rxRequest.pipe(catchError(errorHandler)) : rxRequest;
   }
 }
