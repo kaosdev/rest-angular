@@ -7,7 +7,8 @@ export {
 } from './lib/http/path-parser/path-parser-factory';
 
 export {
-  RestOnError
+  RestOnError,
+  REST_ERROR_HANDLER,
 } from './lib/http/error-handler/error-handler';
 
 export {

@@ -14,6 +14,7 @@ import {DefaultOptions} from './types/rest-default-options';
 import {Injection} from './types/injection';
 import {QueryParserFactory, StandardQueryParserFactory} from './http/query-parser/query-parser-factory';
 import {HeadersParserFactory, StandardHeadersParserFactory} from './http/header-parser/headers-parser-factory';
+import {isErrorHandler, REST_ERROR_HANDLER, RestOnError} from './http/error-handler/error-handler';
 
 export const REST_BASE_URL = new InjectionToken<string>('Base url');
 
@@ -42,6 +43,7 @@ const PARAMETERS_PARSER_FACTORIES: Injection<ParameterParserFactory<any>>[] = [
  */
 export abstract class RestAngularApi {
   client: RestAngularClient;
+  errorHandler: RestOnError;
 
   constructor(
     @Inject(HttpClient)
@@ -49,11 +51,20 @@ export abstract class RestAngularApi {
     @Inject(Injector)
     private readonly injector: Injector,
   ) {
+    this.errorHandler = this.getErrorHandler();
     this.client = new RestAngularClient(
       this.getParameterParserFactories(),
       this.getEndpointsMetadata(),
       this.getMergedOptions()
     );
+  }
+
+  private getErrorHandler(): RestOnError {
+    if (isErrorHandler(this)) {
+      return this;
+    }
+
+    return this.injector.get(REST_ERROR_HANDLER, null);
   }
 
   private getParameterParserFactories(): ParameterParserFactory<any>[] {
@@ -97,13 +108,14 @@ export abstract class RestAngularApi {
 
   public makeRequest<T>(methodKey: string, parameterValues: any[]): Observable<T> {
     const httpRequest = this.client.buildRequest(methodKey, parameterValues);
-    const errorHandler = this['onError'];
 
-    const rxRequest = this.httpClient.request<T>(httpRequest).pipe(
+    const mappedRequest = this.httpClient.request<T>(httpRequest).pipe(
       takeLast(1),
       map((response: HttpResponse<T>) => response.body),
     );
 
-    return errorHandler ? rxRequest.pipe(catchError(errorHandler)) : rxRequest;
+    return this.errorHandler ? mappedRequest.pipe(
+      catchError(err => this.errorHandler.onError(err))
+    ) : mappedRequest;
   }
 }
