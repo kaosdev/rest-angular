@@ -1,4 +1,3 @@
-
 export * from './lib/decorators';
 
 export {
@@ -6,6 +5,11 @@ export {
   CurlyPathParserFactory,
   StandardPathParserFactory
 } from './lib/http/path-parser/path-parser-factory';
+
+export {
+  RestOnError
+} from './lib/http/error-handler/error-handler';
+
 export {
   RestAngularApi,
   REST_BASE_URL,
