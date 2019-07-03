@@ -2,7 +2,7 @@
   "name": "rest-angular-decorators",
   "description": "An Angular Http Client for fast Rest APIs.",
   "repository": "https://github.com/kaosdev/rest-angular.git",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
